@@ -580,12 +580,12 @@
       loadQuestion(currentQuestion);
     }
 
-    // Show answers (lime fill + passage highlighting)
+    // Show answers - ALL 6 passage areas highlighted + current question correct answer
     function showAnswers() {
       const q = readingData.questions[currentQuestion - 1];
       const options = document.querySelectorAll('.option');
       
-      // Highlight correct answer option
+      // Highlight correct answer option for current question
       options.forEach((opt, i) => {
         opt.classList.remove('correct');
         if (i === q.correct) {
@@ -593,15 +593,107 @@
         }
       });
 
-      // Highlight corresponding passage text
-      const passageSpan = document.getElementById(`answer-${currentQuestion}`);
-      if (passageSpan) {
-        passageSpan.classList.add('answer-highlight');
+      // Highlight ALL 6 passage areas simultaneously
+      for (let i = 1; i <= 6; i++) {
+        const passageSpan = document.getElementById(`answer-${i}`);
+        if (passageSpan) {
+          passageSpan.classList.add('answer-highlight');
+        }
+      }
+      
+      // Remove highlights after 5 seconds
+      setTimeout(() => {
+        document.querySelectorAll('.answer-highlight').forEach(span => {
+          span.classList.remove('answer-highlight');
+        });
+      }, 5000);
+    }
+
+    // Check answers - Full review mode with all questions
+    function checkAnswers() {
+      let score = 0;
+      let totalQuestions = readingData.questions.length;
+      
+      readingData.questions.forEach((q, i) => {
+        if (userAnswers[q.id] === q.correct) score++;
+      });
+      
+      const percentage = Math.round((score / totalQuestions) * 100);
+      
+      // Create review overlay
+      const reviewOverlay = document.createElement('div');
+      reviewOverlay.className = 'check-answers-mode';
+      reviewOverlay.id = 'review-overlay';
+      
+      // Header with score
+      const header = document.createElement('div');
+      header.className = 'check-answers-header';
+      header.innerHTML = `
+        <div class="check-answers-title">📋 Answer Review</div>
+        <div class="check-answers-score">Score: ${score}/${totalQuestions} (${percentage}%)</div>
+      `;
+      reviewOverlay.appendChild(header);
+      
+      // All questions review
+      readingData.questions.forEach((q, index) => {
+        const userAnswer = userAnswers[q.id];
+        const reviewQuestion = document.createElement('div');
+        reviewQuestion.className = 'review-question';
         
-        // Remove highlight after 3 seconds
-        setTimeout(() => {
-          passageSpan.classList.remove('answer-highlight');
-        }, 3000);
+        // Question header
+        const questionHeader = document.createElement('div');
+        questionHeader.className = 'review-question-header';
+        questionHeader.innerHTML = `
+          <div class="review-question-number">${q.id}</div>
+          <div class="review-question-text">${q.text}</div>
+        `;
+        reviewQuestion.appendChild(questionHeader);
+        
+        // Options container
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'review-options';
+        
+        q.options.forEach((opt, i) => {
+          const labels = ['A', 'B', 'C', 'D'];
+          const optionDiv = document.createElement('div');
+          optionDiv.className = 'review-option';
+          
+          // Determine styling
+          if (i === q.correct) {
+            optionDiv.classList.add('correct');
+          } else if (userAnswer === i && i !== q.correct) {
+            optionDiv.classList.add('user-wrong');
+          } else {
+            optionDiv.classList.add('neutral');
+          }
+          
+          optionDiv.innerHTML = `
+            <span class="review-option-label">${labels[i]}</span>
+            ${opt}
+          `;
+          
+          optionsContainer.appendChild(optionDiv);
+        });
+        
+        reviewQuestion.appendChild(optionsContainer);
+        reviewOverlay.appendChild(reviewQuestion);
+      });
+      
+      // Close button
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'close-review-btn';
+      closeBtn.innerHTML = '✕';
+      closeBtn.onclick = closeReview;
+      reviewOverlay.appendChild(closeBtn);
+      
+      document.body.appendChild(reviewOverlay);
+    }
+
+    // Close review mode
+    function closeReview() {
+      const reviewOverlay = document.getElementById('review-overlay');
+      if (reviewOverlay) {
+        reviewOverlay.remove();
       }
     }
 
@@ -612,10 +704,9 @@
       document.querySelectorAll('.answer-highlight').forEach(span => {
         span.classList.remove('answer-highlight');
       });
+      // Close review if open
+      closeReview();
       loadQuestion(1);
-    }
-    function nextExercise() {
-      alert("Next exercise not implemented yet.");
     }
     function goBack() {
       history.back();
