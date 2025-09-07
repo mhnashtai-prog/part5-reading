@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INTUITY - Mobile Reading</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-primary: #1a2332;
+      --bg-secondary: #243447;
+      --accent-lime: #32d74b;
+      --text-primary: rgba(255, 255, 255, 0.85);
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --highlight-evidence: rgba(50, 215, 75, 0.25);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 📖 Passage Styling */
+    .passage-content {
+      padding: 1rem;
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 36ch; /* ~11 words per line */
+      margin: 80px auto 120px auto; /* top margin for nav buttons */
+      font-weight: 400;
+    }
+
+    .passage-paragraph {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    /* 🫧 Question Bubble */
+    .question-bubble {
+      position: fixed;
+      bottom: 90px; /* leave space for nav buttons */
+      left: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(25px);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      max-height: 50vh;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .question-number {
+      background: var(--accent-lime);
+      color: #000;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .question-text {
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .options-container {
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 0.6rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.85rem;
+    }
+
+    .option:hover {
+      border-color: var(--accent-lime);
+      background: rgba(50, 215, 75, 0.1);
+    }
+
+    .option.selected {
+      border-color: var(--accent-lime);
+      color: var(--accent-lime);
+    }
+
+    /* 🔘 Lime Navigation Buttons */
+    .nav-buttons {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 1200;
+    }
+
+    .nav-btn {
+      background: var(--accent-lime);
+      border: none;
+      border-radius: 50%;
+      width: 2.6rem;
+      height: 2.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 480px) {
+      .passage-content {
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .question-bubble {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Passage -->
+  <div class="passage-content" id="passage-content">
+    <!-- Text will load here -->
+  </div>
+
+  <!-- Question Bubble -->
+  <div class="question-bubble" id="question-bubble">
+    <div class="question-header">
+      <div class="question-number" id="question-number">1</div>
+    </div>
+    <div class="question-text" id="question-text">Loading question...</div>
+    <div class="options-container" id="options-container"></div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="nav-buttons" id="nav-buttons"></div>
+
+  <script>
+    // 📚 Sample Data
+    const readingData = {
+      passage: [
+        "The rapid advancement of digital technology has fundamentally transformed the landscape of education in the 21st century.",
+        "Educational institutions worldwide have embraced various forms of technology integration, from simple presentation tools to sophisticated learning systems.",
+        "However, the shift to digital education is not without its challenges.",
+        "Despite these concerns, research suggests that when properly implemented, digital tools can enhance learning outcomes significantly."
+      ],
+      questions: [
+        { id: 1, text: "What is transforming education?", options: ["Books", "Technology", "Sports"], correct: 1 },
+        { id: 2, text: "Who embraced technology?", options: ["Teachers only", "Institutions worldwide", "Students only"], correct: 1 },
+        { id: 3, text: "What concern exists?", options: ["Too many exams", "Challenges of digital", "No internet"], correct: 1 },
+        { id: 4, text: "What helps outcomes?", options: ["Proper use of digital tools", "Skipping class", "Old methods only"], correct: 0 },
+        { id: 5, text: "What century is mentioned?", options: ["20th", "21st", "22nd"], correct: 1 },
+        { id: 6, text: "What is being enhanced?", options: ["Sports", "Entertainment", "Learning outcomes"], correct: 2 }
+      ]
+    };
+
+    let currentQuestion = 1;
+    let userAnswers = {};
+
+    // Load passage
+    const passageContainer = document.getElementById('passage-content');
+    passageContainer.innerHTML = readingData.passage
+      .map(p => `<div class="passage-paragraph">${p}</div>`)
+      .join('');
+
+    // Load nav buttons
+    const navButtons = document.getElementById('nav-buttons');
+    readingData.questions.forEach((q, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn';
+      btn.textContent = q.id;
+      btn.onclick = () => loadQuestion(q.id);
+      navButtons.appendChild(btn);
+    });
+
+    // Load question
+    function loadQuestion(id) {
+      currentQuestion = id;
+      const q = readingData.questions[id - 1];
+      document.getElementById('question-number').textContent = q.id;
+      document.getElementById('question-text').textContent = q.text;
+
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = q.options
+        .map((opt, i) =>
+          `<div class="option ${userAnswers[id] === i ? 'selected' : ''}" onclick="selectOption(${i})">${opt}</div>`
+        )
+        .join('');
+    }
+
+    // Select option
+    function selectOption(index) {
+      userAnswers[currentQuestion] = index;
+      loadQuestion(currentQuestion); // reload to apply selected state
+    }
+
+    // Init
+    loadQuestion(1);
+  </script>
+</body>
+</html>
