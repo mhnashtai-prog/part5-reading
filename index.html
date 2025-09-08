@@ -991,16 +991,17 @@
       document.addEventListener('mouseup', endDrag);
     }
 
-    // 🔍 NEW: Check Answers - User Performance Feedback
+    // 🔍 CHECK ANSWERS - User Performance Feedback - IMPROVED
     function checkAnswers() {
+      console.log('CHECK ANSWERS clicked'); // Debug log
       currentMode = 'check';
       
-      // Remove any text highlights
+      // Remove any text highlights first
       document.querySelectorAll('.answer-highlight').forEach(span => {
         span.classList.remove('answer-highlight');
       });
       
-      // Reload current question to show performance feedback
+      // Force reload current question with check mode styling
       loadQuestion(currentQuestion);
       
       // Show the answer review panel
@@ -1009,8 +1010,9 @@
       hapticFeedback();
     }
 
-    // 🗝️ NEW: Show Key - Answer Key + Text Association
+    // 🗝️ SHOW KEY - Answer Key + Text Association - IMPROVED  
     function showKey() {
+      console.log('KEY clicked'); // Debug log
       currentMode = 'key';
       
       // Highlight ALL text spans (answer-1 through answer-6)
@@ -1021,7 +1023,7 @@
         }
       }
       
-      // Reload current question to show answer key
+      // Force reload current question with key mode styling
       loadQuestion(currentQuestion);
       
       // Show the answer review panel
