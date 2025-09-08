@@ -797,13 +797,33 @@
     }
 
     function updateActiveCard() {
+      // Hide all cards first
       document.querySelectorAll('.question-card').forEach(card => {
         card.classList.remove('active');
       });
-      document.getElementById(`card-${currentQuestion}`).classList.add('active');
+      
+      // Show current card
+      const currentCard = document.getElementById(`card-${currentQuestion}`);
+      if (currentCard) {
+        currentCard.classList.add('active');
+      }
+      
+      // Update arrow visibility
+      updateArrowVisibility();
       
       // Update progress
       updateProgress();
+    }
+
+    // ➡️ Update Arrow Visibility
+    function updateArrowVisibility() {
+      const leftArrow = document.getElementById('left-arrow');
+      const rightArrow = document.getElementById('right-arrow');
+      
+      if (leftArrow && rightArrow) {
+        leftArrow.style.opacity = currentQuestion > 1 ? '0.6' : '0.2';
+        rightArrow.style.opacity = currentQuestion < readingData.questions.length ? '0.6' : '0.2';
+      }
     }
 
     // 📊 Update Progress
