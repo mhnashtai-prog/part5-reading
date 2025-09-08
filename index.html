@@ -338,28 +338,42 @@
       color: #000;
     }
 
-    .option.correct {
+    /* NEW: Check Answers - User Performance Feedback */
+    .option.user-correct {
       background: var(--accent-lime) !important;
       color: #000 !important;
       font-weight: 600;
       border-color: var(--accent-lime) !important;
     }
 
-    .option.correct .option-label {
+    .option.user-correct .option-label {
       background: #000 !important;
       color: var(--accent-lime) !important;
     }
 
-    .option.incorrect {
+    .option.user-incorrect {
       background: var(--brick-red) !important;
       color: #fff !important;
       font-weight: 600;
       border-color: var(--brick-red) !important;
     }
 
-    .option.incorrect .option-label {
+    .option.user-incorrect .option-label {
       background: #fff !important;
       color: var(--brick-red) !important;
+    }
+
+    /* NEW: Key Mode - Answer Key Display */
+    .option.answer-key {
+      background: var(--accent-lime) !important;
+      color: #000 !important;
+      font-weight: 600;
+      border-color: var(--accent-lime) !important;
+    }
+
+    .option.answer-key .option-label {
+      background: #000 !important;
+      color: var(--accent-lime) !important;
     }
 
     /* 📱 iOS-Style Swipe Panel (Hidden by default) */
@@ -478,7 +492,7 @@
       margin-bottom: 4px;
     }
 
-    /* 📍 Footer - Simplified to 2 buttons */
+    /* 📍 Footer - Now 3 buttons */
     .footer {
       position: fixed;
       bottom: 0;
@@ -504,7 +518,7 @@
       border-radius: 8px;
       padding: 0.6rem 0.4rem;
       color: #fff;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.3s;
@@ -543,8 +557,8 @@
       }
 
       .footer button {
-        font-size: 0.75rem;
-        padding: 0.5rem 0.3rem;
+        font-size: 0.7rem;
+        padding: 0.5rem 0.2rem;
       }
 
       .question-bubble {
@@ -615,6 +629,11 @@
         margin: var(--space-md) var(--space-sm) 100px var(--space-sm);
         padding: var(--space-md);
         font-size: 0.95rem;
+      }
+
+      .footer button {
+        font-size: 0.65rem;
+        padding: 0.4rem 0.1rem;
       }
     }
 
@@ -690,10 +709,11 @@
     </div>
   </div>
 
-  <!-- 📍 Footer - Only Score and Show Answers -->
+  <!-- 📍 Footer - Score, Check Answers, Key -->
   <div class="footer">
     <button onclick="showScore()">Score</button>
-    <button onclick="showAnswers()">Show Answers</button>
+    <button onclick="checkAnswers()">Check Answers</button>
+    <button onclick="showKey()">Key</button>
   </div>
 
   <script>
@@ -712,7 +732,7 @@
     let currentQuestion = 1;
     let userAnswers = {};
     let isAnswerPanelVisible = false;
-    let answersShown = false;
+    let currentMode = 'normal'; // 'normal', 'check', 'key'
 
     // 🌟 Create constellation
     function createConstellation() {
@@ -755,14 +775,25 @@
       optionsContainer.innerHTML = q.options
         .map((opt, i) => {
           let optionClass = 'option';
+          
+          // Basic selection state
           if (userAnswers[id] === i) optionClass += ' selected';
           
-          // If answers are shown, add correct/incorrect classes
-          if (answersShown) {
+          // Mode-specific styling
+          if (currentMode === 'check') {
+            // CHECK ANSWERS: Show user performance
+            if (userAnswers[id] === i) {
+              if (i === q.correct) {
+                optionClass += ' user-correct'; // User got it right
+              } else {
+                optionClass += ' user-incorrect'; // User got it wrong
+              }
+            }
+            // Don't highlight correct answer if user got it wrong
+          } else if (currentMode === 'key') {
+            // KEY: Show only correct answers
             if (i === q.correct) {
-              optionClass += ' correct';
-            } else if (userAnswers[id] === i && i !== q.correct) {
-              optionClass += ' incorrect';
+              optionClass += ' answer-key';
             }
           }
           
@@ -776,7 +807,7 @@
 
     // Select option
     function selectOption(index) {
-      if (answersShown) return; // Prevent selection after answers shown
+      if (currentMode === 'check' || currentMode === 'key') return; // Prevent selection in feedback modes
       
       userAnswers[currentQuestion] = index;
       loadQuestion(currentQuestion);
@@ -829,7 +860,7 @@
       hapticFeedback();
     }
 
-    // 📋 Create Simplified Review Content (no judgment text)
+    // 📋 Create Simplified Review Content
     function createSimplifiedReviewContent() {
       const reviewContent = document.getElementById('review-content');
       
@@ -893,29 +924,64 @@
       document.addEventListener('mouseup', endDrag);
     }
 
-    // Show answers with visual feedback only
-    function showAnswers() {
-      answersShown = true;
+    // 🔍 NEW: Check Answers - User Performance Feedback
+    function checkAnswers() {
+      currentMode = 'check';
       
-      // Reload current question to show color coding
+      // Remove any text highlights
+      document.querySelectorAll('.answer-highlight').forEach(span => {
+        span.classList.remove('answer-highlight');
+      });
+      
+      // Reload current question to show performance feedback
       loadQuestion(currentQuestion);
       
-      // Highlight corresponding passage text
-      const passageSpan = document.getElementById(`answer-${currentQuestion}`);
-      if (passageSpan) {
-        passageSpan.classList.add('answer-highlight');
-        
-        // Remove highlight after 3 seconds
-        setTimeout(() => {
-          passageSpan.classList.remove('answer-highlight');
-        }, 3000);
-      }
-
-      // Show the simplified answer review panel
+      // Show the answer review panel
       showAnswerPanel();
       
       hapticFeedback();
     }
+
+    // 🗝️ NEW: Show Key - Answer Key + Text Association
+    function showKey() {
+      currentMode = 'key';
+      
+      // Highlight ALL text spans (answer-1 through answer-6)
+      for (let i = 1; i <= 6; i++) {
+        const passageSpan = document.getElementById(`answer-${i}`);
+        if (passageSpan) {
+          passageSpan.classList.add('answer-highlight');
+        }
+      }
+      
+      // Reload current question to show answer key
+      loadQuestion(currentQuestion);
+      
+      // Show the answer review panel
+      showAnswerPanel();
+      
+      hapticFeedback();
+    }
+
+    // 🔄 Reset to normal mode
+    function resetToNormalMode() {
+      currentMode = 'normal';
+      
+      // Remove all text highlights
+      document.querySelectorAll('.answer-highlight').forEach(span => {
+        span.classList.remove('answer-highlight');
+      });
+      
+      // Reload current question
+      loadQuestion(currentQuestion);
+    }
+
+    // Override hideAnswerPanel to reset mode
+    const originalHideAnswerPanel = hideAnswerPanel;
+    hideAnswerPanel = function() {
+      resetToNormalMode();
+      originalHideAnswerPanel();
+    };
     
     function showScore() {
       let score = 0;
