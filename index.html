@@ -43,11 +43,6 @@
       --blur: blur(20px);
       --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.4);
-      
-      /* iOS-style variables */
-      --panel-height: 320px;
-      --drag-handle-height: 5px;
-      --card-spacing: 8px;
     }
 
     * {
@@ -63,9 +58,7 @@
       min-height: 100vh;
       line-height: 1.6;
       overflow-x: hidden;
-      padding-bottom: 70px;
-      user-select: none;
-      -webkit-user-select: none;
+      padding-bottom: 70px; /* space for footer */
     }
 
     /* 🌟 Constellation Background */
@@ -223,15 +216,132 @@
       padding: 2px 6px;
       border-radius: 6px;
       transition: all 0.3s ease;
-      animation: highlight-pulse 2s ease-in-out;
     }
 
-    @keyframes highlight-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(50, 215, 75, 0.4); }
-      50% { box-shadow: 0 0 0 8px rgba(50, 215, 75, 0); }
+    /* 🫧 Question Bubble - SUPER COMPACT */
+    .question-bubble {
+      position: fixed;
+      bottom: 70px;
+      left: 6px;
+      right: 6px;
+      background: var(--card-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border-radius: 12px;
+      padding: 0.75rem;
+      box-shadow: var(--shadow);
+      max-height: 40vh;
+      overflow-y: auto;
+      font-size: 0.75rem;
+      z-index: 50;
+      border: 1px solid var(--card-border);
     }
 
-    /* 📱 iOS-Style Swipe Panel Container */
+    /* 🔘 Question Nav Buttons - SMALLER CIRCLES */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 0.3rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .nav-btn {
+      background: var(--btn-grey);
+      border: none;
+      border-radius: 50%;
+      width: 1.5rem;
+      height: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn.active,
+    .nav-btn.answered {
+      background: var(--accent-lime);
+      color: #000;
+    }
+
+    /* 📌 Question Text - BRICK COLOR */
+    .question-text {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--accent-gold);
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    /* 📝 Options - SUPER COMPACT WITH A B C D */
+    .options-container {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 0.4rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: auto;
+    }
+
+    .option-label {
+      background: var(--btn-grey);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.65rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option:hover {
+      border-color: var(--accent-lime);
+      background: rgba(50, 215, 75, 0.1);
+    }
+
+    .option:hover .option-label {
+      background: var(--accent-lime);
+      color: #000;
+    }
+
+    .option.selected {
+      border-color: var(--accent-lime);
+      color: var(--accent-lime);
+    }
+
+    .option.selected .option-label {
+      background: var(--accent-lime);
+      color: #000;
+    }
+
+    .option.correct {
+      background: var(--accent-lime) !important;
+      color: #000 !important;
+      font-weight: 600;
+    }
+
+    .option.correct .option-label {
+      background: #000 !important;
+      color: var(--accent-lime) !important;
+    }
+
+    /* 📱 iOS-Style Swipe Panel (Hidden by default) */
     .swipe-panel-container {
       position: fixed;
       bottom: 0;
@@ -240,7 +350,12 @@
       height: 100vh;
       pointer-events: none;
       z-index: 200;
-      transition: none;
+      display: none;
+    }
+
+    .swipe-panel-container.visible {
+      display: block;
+      pointer-events: all;
     }
 
     /* 🎯 Drag Handle Area */
@@ -264,7 +379,7 @@
 
     .drag-handle {
       width: 40px;
-      height: var(--drag-handle-height);
+      height: 5px;
       background: rgba(255, 255, 255, 0.4);
       border-radius: 3px;
       transition: all 0.3s ease;
@@ -275,66 +390,30 @@
       width: 50px;
     }
 
-    /* 📚 Question Cards Stack */
-    .question-stack {
+    /* 📚 Answer Review Panel */
+    .answer-review-panel {
       position: absolute;
       bottom: 110px;
-      left: 0;
-      right: 0;
-      height: var(--panel-height);
-      transform: translateY(100%);
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      pointer-events: all;
-    }
-
-    .question-stack.visible {
-      transform: translateY(0);
-    }
-
-    .question-stack.peek {
-      transform: translateY(calc(100% - 60px));
-    }
-
-    /* 📋 Individual Question Cards */
-    .question-card {
-      position: absolute;
       left: 12px;
       right: 12px;
-      height: calc(var(--panel-height) - 40px);
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transform-origin: center bottom;
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      height: 300px;
+      background: var(--card-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--card-border);
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       overflow-y: auto;
     }
 
-    /* 🎨 Card Stacking Effect (iOS Notifications Style) */
-    .question-card:nth-child(1) { bottom: 0; z-index: 60; }
-    .question-card:nth-child(2) { bottom: var(--card-spacing); z-index: 59; transform: scale(0.98); }
-    .question-card:nth-child(3) { bottom: calc(var(--card-spacing) * 2); z-index: 58; transform: scale(0.96); }
-    .question-card:nth-child(4) { bottom: calc(var(--card-spacing) * 3); z-index: 57; transform: scale(0.94); }
-    .question-card:nth-child(5) { bottom: calc(var(--card-spacing) * 4); z-index: 56; transform: scale(0.92); }
-    .question-card:nth-child(6) { bottom: calc(var(--card-spacing) * 5); z-index: 55; transform: scale(0.90); }
-
-    .question-card.active {
-      transform: scale(1) !important;
-      z-index: 70 !important;
-      box-shadow: 0 12px 48px rgba(50, 215, 75, 0.2);
-      border-color: var(--accent-lime);
+    .answer-review-panel.visible {
+      transform: translateY(0);
     }
 
-    .question-card.answered {
-      background: rgba(50, 215, 75, 0.15);
-      border-color: var(--accent-lime);
-    }
-
-    /* 📝 Question Content */
-    .question-header {
+    .review-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -343,103 +422,51 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .question-number {
-      background: var(--accent-lime);
-      color: #000;
-      font-weight: 700;
-      font-size: 0.8rem;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .question-status {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .question-text {
-      font-weight: 600;
-      margin-bottom: 16px;
+    .review-title {
       color: var(--accent-gold);
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-
-    .options-container {
-      display: grid;
-      gap: 8px;
-    }
-
-    .option {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .option-label {
-      background: var(--btn-grey);
-      color: #fff;
       font-weight: 700;
-      font-size: 0.7rem;
-      width: 1.5rem;
-      height: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
       border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      color: #fff;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
+      font-size: 0.8rem;
     }
 
-    .option:hover {
-      border-color: var(--accent-lime);
-      background: rgba(50, 215, 75, 0.1);
-      transform: translateY(-1px);
+    .answer-review-item {
+      margin-bottom: 12px;
+      padding: 8px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
-    .option:hover .option-label {
-      background: var(--accent-lime);
-      color: #000;
+    .review-question {
+      color: var(--accent-gold);
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
     }
 
-    .option.selected {
-      border-color: var(--accent-lime);
-      background: rgba(50, 215, 75, 0.15);
+    .review-answers {
+      font-size: 0.75rem;
+    }
+
+    .correct-answer {
       color: var(--accent-lime);
     }
 
-    .option.selected .option-label {
-      background: var(--accent-lime);
-      color: #000;
-    }
-
-    .option.correct {
-      background: var(--accent-lime) !important;
-      color: #000 !important;
-      font-weight: 600;
-      animation: correct-pulse 1s ease-in-out;
-    }
-
-    .option.correct .option-label {
-      background: #000 !important;
-      color: var(--accent-lime) !important;
-    }
-
-    @keyframes correct-pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
+    .incorrect-answer {
+      color: #ff6b6b;
     }
 
     /* 📍 Footer */
@@ -448,15 +475,16 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: var(--card-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
       display: flex;
       justify-content: space-around;
       align-items: center;
       padding: 0.6rem 0.4rem;
       box-shadow: var(--shadow);
-      z-index: 100;
+      z-index: 50;
+      border-top: 1px solid var(--card-border);
     }
 
     .footer button {
@@ -470,47 +498,12 @@
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background 0.3s;
     }
 
     .footer button:hover {
       background: var(--accent-lime);
       color: #000;
-      transform: translateY(-1px);
-    }
-
-    .footer button:active {
-      transform: translateY(0);
-    }
-
-    /* 📊 Progress Indicator */
-    .progress-indicator {
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 8px 12px;
-      font-size: 0.7rem;
-      z-index: 150;
-      transition: all 0.3s ease;
-    }
-
-    .progress-bar {
-      width: 60px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 2px;
-      margin-top: 4px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--accent-lime);
-      border-radius: 2px;
-      transition: width 0.5s ease;
     }
 
     /* 📱 Mobile Responsive */
@@ -532,20 +525,49 @@
       }
 
       .passage-container {
-        margin: var(--space-lg) var(--space-md) 140px var(--space-md);
+        margin: var(--space-lg) var(--space-md) var(--space-lg) var(--space-md);
         padding: var(--space-lg);
         font-size: 1rem;
       }
 
-      .question-card {
-        left: 8px;
-        right: 8px;
-        padding: 16px;
+      .footer button {
+        font-size: 0.65rem;
+        padding: 0.4rem 0.2rem;
       }
 
-      .progress-indicator {
-        top: 90px;
-        right: 12px;
+      .question-bubble {
+        left: 4px;
+        right: 4px;
+        padding: 0.6rem;
+        border-radius: 10px;
+      }
+
+      .nav-btn {
+        width: 1.2rem;
+        height: 1.2rem;
+        font-size: 0.65rem;
+      }
+
+      .question-text {
+        font-size: 0.75rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .option {
+        padding: 0.3rem;
+        font-size: 0.7rem;
+      }
+
+      .option-label {
+        width: 1rem;
+        height: 1rem;
+        font-size: 0.6rem;
+      }
+
+      .answer-review-panel {
+        left: 8px;
+        right: 8px;
+        padding: 12px;
       }
     }
 
@@ -570,15 +592,9 @@
       }
 
       .passage-container {
-        margin: var(--space-md) var(--space-sm) 140px var(--space-sm);
+        margin: var(--space-md) var(--space-sm) 100px var(--space-sm);
         padding: var(--space-md);
         font-size: 0.95rem;
-      }
-
-      .question-card {
-        left: 6px;
-        right: 6px;
-        padding: 14px;
       }
     }
 
@@ -612,14 +628,6 @@
     </div>
   </header>
 
-  <!-- 📊 Progress Indicator -->
-  <div class="progress-indicator">
-    <div id="progress-text">0/6 answered</div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
-    </div>
-  </div>
-
   <!-- 📖 Beautiful Passage Container -->
   <div class="passage-container" id="passage-content">
     <div class="passage-paragraph">
@@ -636,16 +644,27 @@
     </div>
   </div>
 
-  <!-- 📱 iOS-Style Swipe Panel Container -->
-  <div class="swipe-panel-container">
-    <!-- 🎯 Drag Handle -->
+  <!-- 🫧 Question Bubble - Original Working Style -->
+  <div class="question-bubble">
+    <div class="nav-buttons" id="nav-buttons"></div>
+    <div class="question-text" id="question-text">Loading question...</div>
+    <div class="options-container" id="options-container"></div>
+  </div>
+
+  <!-- 📱 iOS-Style Answer Review Panel -->
+  <div class="swipe-panel-container" id="swipe-panel">
     <div class="drag-handle-area" id="drag-handle-area">
       <div class="drag-handle"></div>
     </div>
 
-    <!-- 📚 Question Cards Stack -->
-    <div class="question-stack" id="question-stack">
-      <!-- Question cards will be dynamically generated here -->
+    <div class="answer-review-panel" id="answer-review-panel">
+      <div class="review-header">
+        <div class="review-title">📋 Answer Review</div>
+        <button class="close-btn" onclick="hideAnswerPanel()">×</button>
+      </div>
+      <div id="review-content">
+        <!-- Review content will be generated here -->
+      </div>
     </div>
   </div>
 
@@ -674,10 +693,7 @@
 
     let currentQuestion = 1;
     let userAnswers = {};
-    let isStackVisible = false;
-    let isDragging = false;
-    let startY = 0;
-    let currentY = 0;
+    let isAnswerPanelVisible = false;
 
     // 🌟 Create constellation
     function createConstellation() {
@@ -692,167 +708,127 @@
       }
     }
 
-    // 📱 Create Question Cards (iOS Notification Style)
-    function createQuestionCards() {
-      const questionStack = document.getElementById('question-stack');
+    // Load nav buttons
+    const navButtons = document.getElementById('nav-buttons');
+    readingData.questions.forEach((q) => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn';
+      btn.textContent = q.id;
+      btn.onclick = () => loadQuestion(q.id);
+      navButtons.appendChild(btn);
+    });
+
+    // Load question WITH A B C D LABELS
+    function loadQuestion(id) {
+      currentQuestion = id;
+      const q = readingData.questions[id - 1];
+      document.getElementById('question-text').textContent = q.text;
+
+      // Update nav buttons state
+      document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+        btn.classList.remove('active');
+        if (index + 1 === id) btn.classList.add('active');
+        if (userAnswers[index + 1] !== undefined) btn.classList.add('answered');
+      });
+
+      const optionsContainer = document.getElementById('options-container');
+      const labels = ['A', 'B', 'C', 'D'];
+      optionsContainer.innerHTML = q.options
+        .map((opt, i) =>
+          `<div class="option ${userAnswers[id] === i ? 'selected' : ''}" onclick="selectOption(${i})">
+            <span class="option-label">${labels[i]}</span>
+            ${opt}
+          </div>`
+        )
+        .join('');
+    }
+
+    // Select option
+    function selectOption(index) {
+      userAnswers[currentQuestion] = index;
+      loadQuestion(currentQuestion);
+      hapticFeedback();
+    }
+
+    // 💫 Haptic Feedback
+    function hapticFeedback() {
+      document.body.classList.add('haptic-feedback');
+      setTimeout(() => {
+        document.body.classList.remove('haptic-feedback');
+      }, 100);
+    }
+
+    // 📱 Show Answer Panel (iOS Style)
+    function showAnswerPanel() {
+      const swipePanel = document.getElementById('swipe-panel');
+      const answerPanel = document.getElementById('answer-review-panel');
+      const passageContainer = document.getElementById('passage-content');
+      
+      // Generate review content
+      createReviewContent();
+      
+      // Show panel
+      swipePanel.classList.add('visible');
+      setTimeout(() => {
+        answerPanel.classList.add('visible');
+        passageContainer.classList.add('blurred');
+      }, 50);
+      
+      isAnswerPanelVisible = true;
+      setupDragHandling();
+      hapticFeedback();
+    }
+
+    // 📱 Hide Answer Panel
+    function hideAnswerPanel() {
+      const swipePanel = document.getElementById('swipe-panel');
+      const answerPanel = document.getElementById('answer-review-panel');
+      const passageContainer = document.getElementById('passage-content');
+      
+      answerPanel.classList.remove('visible');
+      passageContainer.classList.remove('blurred');
+      
+      setTimeout(() => {
+        swipePanel.classList.remove('visible');
+      }, 400);
+      
+      isAnswerPanelVisible = false;
+      hapticFeedback();
+    }
+
+    // 📋 Create Review Content
+    function createReviewContent() {
+      const reviewContent = document.getElementById('review-content');
       const labels = ['A', 'B', 'C', 'D'];
       
-      questionStack.innerHTML = readingData.questions.map((q, index) => `
-        <div class="question-card ${index === 0 ? 'active' : ''}" id="card-${q.id}" data-question-id="${q.id}">
-          <div class="question-header">
-            <div class="question-number">${q.id}</div>
-            <div class="question-status">${userAnswers[q.id] !== undefined ? 'Answered' : 'Unanswered'}</div>
+      reviewContent.innerHTML = readingData.questions.map((q) => {
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        
+        return `
+          <div class="answer-review-item">
+            <div class="review-question">Q${q.id}: ${q.text}</div>
+            <div class="review-answers">
+              Your answer: <span class="${isCorrect ? 'correct-answer' : 'incorrect-answer'}">
+                ${userAnswer !== undefined ? labels[userAnswer] + '. ' + q.options[userAnswer] : 'Not answered'}
+              </span><br>
+              Correct answer: <span class="correct-answer">${labels[q.correct]}. ${q.options[q.correct]}</span>
+            </div>
           </div>
-          <div class="question-text">${q.text}</div>
-          <div class="options-container">
-            ${q.options.map((opt, i) => `
-              <div class="option ${userAnswers[q.id] === i ? 'selected' : ''}" onclick="selectOption(${q.id}, ${i})">
-                <span class="option-label">${labels[i]}</span>
-                ${opt}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-
-      // Add swipe listeners to cards
-      addSwipeListeners();
+        `;
+      }).join('');
     }
 
-    // 🔄 Add Swipe Listeners
-    function addSwipeListeners() {
-      const cards = document.querySelectorAll('.question-card');
-      cards.forEach(card => {
-        let startX = 0;
-        let currentX = 0;
-        let isCardDragging = false;
-
-        // Touch events
-        card.addEventListener('touchstart', (e) => {
-          startX = e.touches[0].clientX;
-          isCardDragging = true;
-        }, { passive: true });
-
-        card.addEventListener('touchmove', (e) => {
-          if (!isCardDragging) return;
-          currentX = e.touches[0].clientX;
-          const diffX = startX - currentX;
-          
-          if (Math.abs(diffX) > 50) {
-            if (diffX > 0) {
-              navigateToNextCard();
-            } else {
-              navigateToPrevCard();
-            }
-            isCardDragging = false;
-          }
-        }, { passive: true });
-
-        card.addEventListener('touchend', () => {
-          isCardDragging = false;
-        });
-
-        // Mouse events for desktop
-        card.addEventListener('mousedown', (e) => {
-          startX = e.clientX;
-          isCardDragging = true;
-        });
-
-        card.addEventListener('mousemove', (e) => {
-          if (!isCardDragging) return;
-          currentX = e.clientX;
-          const diffX = startX - currentX;
-          
-          if (Math.abs(diffX) > 100) {
-            if (diffX > 0) {
-              navigateToNextCard();
-            } else {
-              navigateToPrevCard();
-            }
-            isCardDragging = false;
-          }
-        });
-
-        card.addEventListener('mouseup', () => {
-          isCardDragging = false;
-        });
-      });
-    }
-
-    // 🎯 Navigate Between Cards
-    function navigateToNextCard() {
-      if (currentQuestion < readingData.questions.length) {
-        currentQuestion++;
-        updateActiveCard();
-        hapticFeedback();
-      }
-    }
-
-    function navigateToPrevCard() {
-      if (currentQuestion > 1) {
-        currentQuestion--;
-        updateActiveCard();
-        hapticFeedback();
-      }
-    }
-
-    function updateActiveCard() {
-      // Hide all cards first
-      document.querySelectorAll('.question-card').forEach(card => {
-        card.classList.remove('active');
-      });
-      
-      // Show current card
-      const currentCard = document.getElementById(`card-${currentQuestion}`);
-      if (currentCard) {
-        currentCard.classList.add('active');
-      }
-      
-      // Update arrow visibility
-      updateArrowVisibility();
-      
-      // Update progress
-      updateProgress();
-    }
-
-    // ➡️ Update Arrow Visibility
-    function updateArrowVisibility() {
-      const leftArrow = document.getElementById('left-arrow');
-      const rightArrow = document.getElementById('right-arrow');
-      
-      if (leftArrow && rightArrow) {
-        leftArrow.style.opacity = currentQuestion > 1 ? '0.6' : '0.2';
-        rightArrow.style.opacity = currentQuestion < readingData.questions.length ? '0.6' : '0.2';
-      }
-    }
-
-    // 📊 Update Progress
-    function updateProgress() {
-      const answered = Object.keys(userAnswers).length;
-      const total = readingData.questions.length;
-      const percentage = (answered / total) * 100;
-      
-      document.getElementById('progress-text').textContent = `${answered}/${total} answered`;
-      document.getElementById('progress-fill').style.width = `${percentage}%`;
-    }
-
-    // 🎯 Drag Handle Functionality
-    function setupDragHandle() {
+    // 🎯 Setup Drag Handling
+    function setupDragHandling() {
       const dragHandle = document.getElementById('drag-handle-area');
-      const questionStack = document.getElementById('question-stack');
-      const passageContainer = document.getElementById('passage-content');
-
-      // Touch events
-      dragHandle.addEventListener('touchstart', startDrag, { passive: false });
-      document.addEventListener('touchmove', drag, { passive: false });
-      document.addEventListener('touchend', endDrag);
-
-      // Mouse events
-      dragHandle.addEventListener('mousedown', startDrag);
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('mouseup', endDrag);
+      const answerPanel = document.getElementById('answer-review-panel');
+      let isDragging = false;
+      let startY = 0;
+      let currentY = 0;
 
       function startDrag(e) {
+        if (!isAnswerPanelVisible) return;
         isDragging = true;
         startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
         dragHandle.style.cursor = 'grabbing';
@@ -864,15 +840,8 @@
         
         currentY = (e.type === 'touchmove' ? e.touches[0].clientY : e.clientY) - startY;
         
-        // Limit drag range
-        currentY = Math.max(-300, Math.min(100, currentY));
-        
-        if (currentY < -50) {
-          questionStack.style.transform = `translateY(${Math.max(-100, currentY)}%)`;
-          passageContainer.classList.add('blurred');
-        } else {
-          questionStack.style.transform = `translateY(${100 + currentY}%)`;
-          passageContainer.classList.remove('blurred');
+        if (currentY > 0) {
+          answerPanel.style.transform = `translateY(${Math.min(currentY, 300)}px)`;
         }
       }
 
@@ -881,100 +850,32 @@
         isDragging = false;
         dragHandle.style.cursor = 'grab';
         
-        if (currentY < -100) {
-          showQuestionStack();
-        } else if (currentY > 50) {
-          hideQuestionStack();
+        if (currentY > 100) {
+          hideAnswerPanel();
         } else {
-          // Snap to peek or closed
-          if (isStackVisible) {
-            showQuestionStack();
-          } else {
-            hideQuestionStack();
-          }
+          answerPanel.style.transform = 'translateY(0)';
         }
         
         currentY = 0;
       }
+
+      // Touch events
+      dragHandle.addEventListener('touchstart', startDrag, { passive: false });
+      document.addEventListener('touchmove', drag, { passive: false });
+      document.addEventListener('touchend', endDrag);
+
+      // Mouse events
+      dragHandle.addEventListener('mousedown', startDrag);
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('mouseup', endDrag);
     }
 
-    // 📱 Show/Hide Question Stack
-    function showQuestionStack() {
-      const questionStack = document.getElementById('question-stack');
-      const passageContainer = document.getElementById('passage-content');
-      
-      questionStack.classList.add('visible');
-      questionStack.classList.remove('peek');
-      passageContainer.classList.add('blurred');
-      isStackVisible = true;
-      
-      hapticFeedback();
-    }
-
-    function hideQuestionStack() {
-      const questionStack = document.getElementById('question-stack');
-      const passageContainer = document.getElementById('passage-content');
-      
-      questionStack.classList.remove('visible', 'peek');
-      passageContainer.classList.remove('blurred');
-      isStackVisible = false;
-      
-      hapticFeedback();
-    }
-
-    function peekQuestionStack() {
-      const questionStack = document.getElementById('question-stack');
-      questionStack.classList.add('peek');
-      questionStack.classList.remove('visible');
-      isStackVisible = false;
-    }
-
-    // 💫 Haptic Feedback Simulation
-    function hapticFeedback() {
-      document.body.classList.add('haptic-feedback');
-      setTimeout(() => {
-        document.body.classList.remove('haptic-feedback');
-      }, 100);
-    }
-
-    // 📝 Select Option
-    function selectOption(questionId, optionIndex) {
-      userAnswers[questionId] = optionIndex;
-      
-      // Update card
-      const card = document.getElementById(`card-${questionId}`);
-      card.classList.add('answered');
-      
-      // Update options display
-      const options = card.querySelectorAll('.option');
-      options.forEach((opt, i) => {
-        opt.classList.remove('selected');
-        if (i === optionIndex) {
-          opt.classList.add('selected');
-        }
-      });
-      
-      // Update status
-      card.querySelector('.question-status').textContent = 'Answered';
-      
-      updateProgress();
-      hapticFeedback();
-      
-      // Auto-advance to next question
-      setTimeout(() => {
-        if (questionId < readingData.questions.length) {
-          navigateToNextCard();
-        }
-      }, 800);
-    }
-
-    // 🌟 Show Answers
+    // Show answers (highlighting + panel)
     function showAnswers() {
       const q = readingData.questions[currentQuestion - 1];
-      const card = document.getElementById(`card-${currentQuestion}`);
-      const options = card.querySelectorAll('.option');
+      const options = document.querySelectorAll('.option');
       
-      // Highlight correct answer in current card
+      // Highlight correct answer option
       options.forEach((opt, i) => {
         opt.classList.remove('correct');
         if (i === q.correct) {
@@ -992,78 +893,56 @@
           passageSpan.classList.remove('answer-highlight');
         }, 3000);
       }
-      
-      hapticFeedback();
+
+      // Show the answer review panel
+      showAnswerPanel();
     }
 
-    // 🔄 Footer Actions
+    // Footer actions
     function repeatExercise() {
       userAnswers = {};
-      currentQuestion = 1;
-      
-      // Remove all highlights
+      // Remove all passage highlights
       document.querySelectorAll('.answer-highlight').forEach(span => {
         span.classList.remove('answer-highlight');
       });
       
-      createQuestionCards();
-      updateProgress();
-      hideQuestionStack();
+      if (isAnswerPanelVisible) {
+        hideAnswerPanel();
+      }
+      
+      loadQuestion(1);
       hapticFeedback();
     }
-
+    
     function nextExercise() {
-      alert("🚀 Next exercise coming soon!");
+      alert("Next exercise not implemented yet.");
     }
-
+    
     function goBack() {
       history.back();
     }
-
+    
     function goHome() {
       location.href = "/";
     }
-
+    
     function showScore() {
       let score = 0;
       let totalQuestions = readingData.questions.length;
       
-      readingData.questions.forEach((q) => {
+      readingData.questions.forEach((q, i) => {
         if (userAnswers[q.id] === q.correct) score++;
       });
       
+      // Enhanced score display
       const percentage = Math.round((score / totalQuestions) * 100);
       alert(`🎯 Your Score: ${score}/${totalQuestions} correct answers (${percentage}%)`);
-      hapticFeedback();
     }
 
-    // 🚀 Initialize
+    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       createConstellation();
-      createQuestionCards();
-      setupDragHandle();
-      updateProgress();
-      
-      // Show peek initially to hint at functionality
-      setTimeout(() => {
-        peekQuestionStack();
-        setTimeout(() => {
-          hideQuestionStack();
-        }, 2000);
-      }, 1000);
-    });
-
-    // ⌨️ Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowUp' && !isStackVisible) {
-        showQuestionStack();
-      } else if (e.key === 'ArrowDown' && isStackVisible) {
-        hideQuestionStack();
-      } else if (e.key === 'ArrowLeft' && isStackVisible) {
-        navigateToPrevCard();
-      } else if (e.key === 'ArrowRight' && isStackVisible) {
-        navigateToNextCard();
-      }
+      loadQuestion(1);
     });
   </script>
 </body>
