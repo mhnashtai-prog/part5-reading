@@ -425,13 +425,13 @@
       width: 50px;
     }
 
-    /* 📚 Answer Review Panel - Simplified */
+    /* 📚 Answer Review Panel - Enhanced with Options */
     .answer-review-panel {
       position: absolute;
       bottom: 110px;
       left: 12px;
       right: 12px;
-      height: 300px;
+      height: 400px; /* Increased height for more content */
       background: var(--card-bg);
       backdrop-filter: var(--blur);
       -webkit-backdrop-filter: var(--blur);
@@ -478,8 +478,8 @@
     }
 
     .answer-review-item {
-      margin-bottom: 12px;
-      padding: 8px;
+      margin-bottom: 16px;
+      padding: 12px;
       background: rgba(255,255,255,0.05);
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.1);
@@ -489,7 +489,29 @@
       color: var(--accent-gold);
       font-weight: 600;
       font-size: 0.8rem;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* NEW: Enhanced option styling in review panel */
+    .review-option {
+      margin: 3px 0;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      padding: 2px 0;
+    }
+
+    .review-option-label {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 8px;
+      font-weight: 600;
+      font-size: 0.65rem;
+      min-width: 20px;
+      text-align: center;
+      flex-shrink: 0;
     }
 
     /* 📍 Footer - Now 3 buttons */
@@ -594,6 +616,7 @@
         left: 8px;
         right: 8px;
         padding: 12px;
+        height: 350px;
       }
     }
 
@@ -634,17 +657,6 @@
       .footer button {
         font-size: 0.65rem;
         padding: 0.4rem 0.1rem;
-      }
-
-      .panel-option {
-        padding: 5px;
-        font-size: 0.65rem;
-      }
-
-      .panel-option-label {
-        width: 16px;
-        height: 16px;
-        font-size: 0.6rem;
       }
 
       .answer-review-panel {
@@ -707,7 +719,7 @@
     <div class="options-container" id="options-container"></div>
   </div>
 
-  <!-- 📱 iOS-Style Answer Review Panel - Simplified -->
+  <!-- 📱 iOS-Style Answer Review Panel - Enhanced -->
   <div class="swipe-panel-container" id="swipe-panel">
     <div class="drag-handle-area" id="drag-handle-area">
       <div class="drag-handle"></div>
@@ -715,11 +727,11 @@
 
     <div class="answer-review-panel" id="answer-review-panel">
       <div class="review-header">
-        <div class="review-title">📋 Question Review</div>
+        <div class="review-title">📋 Complete Question Review</div>
         <button class="close-btn" onclick="hideAnswerPanel()">×</button>
       </div>
       <div id="review-content">
-        <!-- Simplified review content -->
+        <!-- Enhanced review content with all options -->
       </div>
     </div>
   </div>
@@ -820,13 +832,44 @@
         .join('');
     }
 
-    // Select option
+    // Select option - IMPROVED TO PREVENT JERKING
     function selectOption(index) {
       if (currentMode === 'check' || currentMode === 'key') return; // Prevent selection in feedback modes
       
       userAnswers[currentQuestion] = index;
-      loadQuestion(currentQuestion);
-      hapticFeedback();
+      
+      // Update only the visual state without rebuilding entire container
+      updateOptionVisuals();
+      updateNavButtonState();
+      
+      // Gentler haptic feedback for mobile
+      if (window.innerWidth > 768) {
+        hapticFeedback();
+      }
+    }
+
+    // NEW: Update option visuals without rebuilding container
+    function updateOptionVisuals() {
+      const options = document.querySelectorAll('.option');
+      const selectedIndex = userAnswers[currentQuestion];
+      
+      options.forEach((option, index) => {
+        option.classList.remove('selected');
+        if (index === selectedIndex) {
+          option.classList.add('selected');
+        }
+      });
+    }
+
+    // NEW: Update nav button state separately
+    function updateNavButtonState() {
+      document.querySelectorAll('.nav-btn-question').forEach((btn, index) => {
+        btn.classList.remove('active');
+        btn.classList.remove('answered');
+        
+        if (index + 1 === currentQuestion) btn.classList.add('active');
+        if (userAnswers[index + 1] !== undefined) btn.classList.add('answered');
+      });
     }
 
     // 💫 Haptic Feedback
@@ -843,8 +886,8 @@
       const answerPanel = document.getElementById('answer-review-panel');
       const passageContainer = document.getElementById('passage-content');
       
-      // Generate simplified review content
-      createSimplifiedReviewContent();
+      // Generate enhanced review content with all options
+      createEnhancedReviewContent();
       
       // Show panel
       swipePanel.classList.add('visible');
@@ -875,14 +918,23 @@
       hapticFeedback();
     }
 
-    // 📋 Create Simplified Review Content
-    function createSimplifiedReviewContent() {
+    // 📋 Create Enhanced Review Content - NOW WITH ALL OPTIONS A, B, C, D
+    function createEnhancedReviewContent() {
       const reviewContent = document.getElementById('review-content');
+      const labels = ['A', 'B', 'C', 'D'];
       
       reviewContent.innerHTML = readingData.questions.map((q) => {
+        const optionsHtml = q.options.map((option, index) => {
+          return `<div class="review-option">
+            <span class="review-option-label">${labels[index]}</span>
+            <span>${option}</span>
+          </div>`;
+        }).join('');
+        
         return `
           <div class="answer-review-item">
             <div class="review-question">Q${q.id}: ${q.text}</div>
+            ${optionsHtml}
           </div>
         `;
       }).join('');
