@@ -19,6 +19,7 @@
       --accent-gold: #f4a261;
       --accent-teal: #2dd4bf;
       --accent-lime: #32d74b;
+      --brick-red: #d14545;
       --text-primary: #ffffff;
       --text-secondary: rgba(255, 255, 255, 0.7);
       --text-muted: rgba(255, 255, 255, 0.5);
@@ -92,7 +93,7 @@
       100% { opacity: 0.8; }
     }
 
-    /* 🎯 INTUITY Header - Exercise Style */
+    /* 🎯 INTUITY Header - Updated with Navigation */
     .header {
       position: sticky;
       top: 0;
@@ -108,13 +109,9 @@
       max-width: 600px;
       margin: 0 auto;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-    }
-
-    .header-left {
       text-align: center;
-      flex: 1;
     }
 
     /* ✨ EXACT INTUITY Title Design */
@@ -151,14 +148,24 @@
       }
     }
 
+    /* NEW: Author section with navigation buttons */
+    .author-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4cm; /* Exactly 4cm between buttons */
+      margin-top: var(--space-xs);
+    }
+
     .author-credit {
       font-size: 0.65rem;
       color: var(--text-muted);
       font-weight: 300;
+      white-space: nowrap;
     }
 
-    /* 🏠 Home Button */
-    .home-btn {
+    /* Navigation Buttons */
+    .nav-btn {
       background: var(--card-bg);
       backdrop-filter: var(--blur);
       -webkit-backdrop-filter: var(--blur);
@@ -174,9 +181,10 @@
       display: flex;
       align-items: center;
       gap: var(--space-xs);
+      flex-shrink: 0;
     }
 
-    .home-btn:hover {
+    .nav-btn:hover {
       background: rgba(255, 255, 255, 0.15);
       border-color: var(--accent-teal);
       transform: translateY(-2px);
@@ -245,7 +253,7 @@
       margin-bottom: 0.6rem;
     }
 
-    .nav-btn {
+    .nav-btn-question {
       background: var(--btn-grey);
       border: none;
       border-radius: 50%;
@@ -261,8 +269,8 @@
       transition: all 0.2s ease;
     }
 
-    .nav-btn.active,
-    .nav-btn.answered {
+    .nav-btn-question.active,
+    .nav-btn-question.answered {
       background: var(--accent-lime);
       color: #000;
     }
@@ -334,11 +342,24 @@
       background: var(--accent-lime) !important;
       color: #000 !important;
       font-weight: 600;
+      border-color: var(--accent-lime) !important;
     }
 
     .option.correct .option-label {
       background: #000 !important;
       color: var(--accent-lime) !important;
+    }
+
+    .option.incorrect {
+      background: var(--brick-red) !important;
+      color: #fff !important;
+      font-weight: 600;
+      border-color: var(--brick-red) !important;
+    }
+
+    .option.incorrect .option-label {
+      background: #fff !important;
+      color: var(--brick-red) !important;
     }
 
     /* 📱 iOS-Style Swipe Panel (Hidden by default) */
@@ -390,7 +411,7 @@
       width: 50px;
     }
 
-    /* 📚 Answer Review Panel */
+    /* 📚 Answer Review Panel - Simplified */
     .answer-review-panel {
       position: absolute;
       bottom: 110px;
@@ -457,19 +478,7 @@
       margin-bottom: 4px;
     }
 
-    .review-answers {
-      font-size: 0.75rem;
-    }
-
-    .correct-answer {
-      color: var(--accent-lime);
-    }
-
-    .incorrect-answer {
-      color: #ff6b6b;
-    }
-
-    /* 📍 Footer */
+    /* 📍 Footer - Simplified to 2 buttons */
     .footer {
       position: fixed;
       bottom: 0;
@@ -493,9 +502,9 @@
       background: var(--btn-grey);
       border: none;
       border-radius: 8px;
-      padding: 0.5rem 0.3rem;
+      padding: 0.6rem 0.4rem;
       color: #fff;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.3s;
@@ -518,10 +527,13 @@
         top: -8px;
       }
 
-      .header-content {
-        flex-direction: column;
-        gap: var(--space-sm);
-        text-align: center;
+      .author-section {
+        gap: 2cm;
+      }
+
+      .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
       }
 
       .passage-container {
@@ -531,8 +543,8 @@
       }
 
       .footer button {
-        font-size: 0.65rem;
-        padding: 0.4rem 0.2rem;
+        font-size: 0.75rem;
+        padding: 0.5rem 0.3rem;
       }
 
       .question-bubble {
@@ -542,7 +554,7 @@
         border-radius: 10px;
       }
 
-      .nav-btn {
+      .nav-btn-question {
         width: 1.2rem;
         height: 1.2rem;
         font-size: 0.65rem;
@@ -586,9 +598,17 @@
         top: -6px;
       }
 
-      .home-btn {
-        padding: 6px 10px;
-        font-size: 0.75rem;
+      .author-section {
+        gap: 1.5cm;
+      }
+
+      .nav-btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+      }
+
+      .author-credit {
+        font-size: 0.6rem;
       }
 
       .passage-container {
@@ -614,17 +634,19 @@
   <!-- 🌟 Constellation Background -->
   <div class="constellation-bg" id="constellation"></div>
 
-  <!-- 🎯 INTUITY Header - Exercise Style -->
+  <!-- 🎯 INTUITY Header with Navigation -->
   <header class="header">
     <div class="header-content">
-      <a href="../index.html" class="home-btn">
-        <i class="fas fa-home"></i> Home
-      </a>
-      <div class="header-left">
-        <div class="brand-name">INTUITY</div>
+      <div class="brand-name">INTUITY</div>
+      <div class="author-section">
+        <a href="../index.html" class="nav-btn">
+          <i class="fas fa-home"></i> Home
+        </a>
         <div class="author-credit">by Majid Nashtai</div>
+        <a href="javascript:history.back()" class="nav-btn">
+          <i class="fas fa-arrow-left"></i> Back
+        </a>
       </div>
-      <div style="width: 80px;"></div>
     </div>
   </header>
 
@@ -644,14 +666,14 @@
     </div>
   </div>
 
-  <!-- 🫧 Question Bubble - Original Working Style -->
+  <!-- 🫧 Question Bubble -->
   <div class="question-bubble">
     <div class="nav-buttons" id="nav-buttons"></div>
     <div class="question-text" id="question-text">Loading question...</div>
     <div class="options-container" id="options-container"></div>
   </div>
 
-  <!-- 📱 iOS-Style Answer Review Panel -->
+  <!-- 📱 iOS-Style Answer Review Panel - Simplified -->
   <div class="swipe-panel-container" id="swipe-panel">
     <div class="drag-handle-area" id="drag-handle-area">
       <div class="drag-handle"></div>
@@ -659,21 +681,17 @@
 
     <div class="answer-review-panel" id="answer-review-panel">
       <div class="review-header">
-        <div class="review-title">📋 Answer Review</div>
+        <div class="review-title">📋 Question Review</div>
         <button class="close-btn" onclick="hideAnswerPanel()">×</button>
       </div>
       <div id="review-content">
-        <!-- Review content will be generated here -->
+        <!-- Simplified review content -->
       </div>
     </div>
   </div>
 
-  <!-- 📍 Footer -->
+  <!-- 📍 Footer - Only Score and Show Answers -->
   <div class="footer">
-    <button onclick="repeatExercise()">Repeat</button>
-    <button onclick="nextExercise()">Next Exercise</button>
-    <button onclick="goBack()">Back</button>
-    <button onclick="goHome()">Home</button>
     <button onclick="showScore()">Score</button>
     <button onclick="showAnswers()">Show Answers</button>
   </div>
@@ -694,6 +712,7 @@
     let currentQuestion = 1;
     let userAnswers = {};
     let isAnswerPanelVisible = false;
+    let answersShown = false;
 
     // 🌟 Create constellation
     function createConstellation() {
@@ -712,7 +731,7 @@
     const navButtons = document.getElementById('nav-buttons');
     readingData.questions.forEach((q) => {
       const btn = document.createElement('button');
-      btn.className = 'nav-btn';
+      btn.className = 'nav-btn-question';
       btn.textContent = q.id;
       btn.onclick = () => loadQuestion(q.id);
       navButtons.appendChild(btn);
@@ -725,7 +744,7 @@
       document.getElementById('question-text').textContent = q.text;
 
       // Update nav buttons state
-      document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+      document.querySelectorAll('.nav-btn-question').forEach((btn, index) => {
         btn.classList.remove('active');
         if (index + 1 === id) btn.classList.add('active');
         if (userAnswers[index + 1] !== undefined) btn.classList.add('answered');
@@ -734,17 +753,31 @@
       const optionsContainer = document.getElementById('options-container');
       const labels = ['A', 'B', 'C', 'D'];
       optionsContainer.innerHTML = q.options
-        .map((opt, i) =>
-          `<div class="option ${userAnswers[id] === i ? 'selected' : ''}" onclick="selectOption(${i})">
+        .map((opt, i) => {
+          let optionClass = 'option';
+          if (userAnswers[id] === i) optionClass += ' selected';
+          
+          // If answers are shown, add correct/incorrect classes
+          if (answersShown) {
+            if (i === q.correct) {
+              optionClass += ' correct';
+            } else if (userAnswers[id] === i && i !== q.correct) {
+              optionClass += ' incorrect';
+            }
+          }
+          
+          return `<div class="${optionClass}" onclick="selectOption(${i})">
             <span class="option-label">${labels[i]}</span>
             ${opt}
-          </div>`
-        )
+          </div>`;
+        })
         .join('');
     }
 
     // Select option
     function selectOption(index) {
+      if (answersShown) return; // Prevent selection after answers shown
+      
       userAnswers[currentQuestion] = index;
       loadQuestion(currentQuestion);
       hapticFeedback();
@@ -764,8 +797,8 @@
       const answerPanel = document.getElementById('answer-review-panel');
       const passageContainer = document.getElementById('passage-content');
       
-      // Generate review content
-      createReviewContent();
+      // Generate simplified review content
+      createSimplifiedReviewContent();
       
       // Show panel
       swipePanel.classList.add('visible');
@@ -796,24 +829,14 @@
       hapticFeedback();
     }
 
-    // 📋 Create Review Content
-    function createReviewContent() {
+    // 📋 Create Simplified Review Content (no judgment text)
+    function createSimplifiedReviewContent() {
       const reviewContent = document.getElementById('review-content');
-      const labels = ['A', 'B', 'C', 'D'];
       
       reviewContent.innerHTML = readingData.questions.map((q) => {
-        const userAnswer = userAnswers[q.id];
-        const isCorrect = userAnswer === q.correct;
-        
         return `
           <div class="answer-review-item">
             <div class="review-question">Q${q.id}: ${q.text}</div>
-            <div class="review-answers">
-              Your answer: <span class="${isCorrect ? 'correct-answer' : 'incorrect-answer'}">
-                ${userAnswer !== undefined ? labels[userAnswer] + '. ' + q.options[userAnswer] : 'Not answered'}
-              </span><br>
-              Correct answer: <span class="correct-answer">${labels[q.correct]}. ${q.options[q.correct]}</span>
-            </div>
           </div>
         `;
       }).join('');
@@ -870,19 +893,13 @@
       document.addEventListener('mouseup', endDrag);
     }
 
-    // Show answers (highlighting + panel)
+    // Show answers with visual feedback only
     function showAnswers() {
-      const q = readingData.questions[currentQuestion - 1];
-      const options = document.querySelectorAll('.option');
+      answersShown = true;
       
-      // Highlight correct answer option
-      options.forEach((opt, i) => {
-        opt.classList.remove('correct');
-        if (i === q.correct) {
-          opt.classList.add('correct');
-        }
-      });
-
+      // Reload current question to show color coding
+      loadQuestion(currentQuestion);
+      
       // Highlight corresponding passage text
       const passageSpan = document.getElementById(`answer-${currentQuestion}`);
       if (passageSpan) {
@@ -894,36 +911,10 @@
         }, 3000);
       }
 
-      // Show the answer review panel
+      // Show the simplified answer review panel
       showAnswerPanel();
-    }
-
-    // Footer actions
-    function repeatExercise() {
-      userAnswers = {};
-      // Remove all passage highlights
-      document.querySelectorAll('.answer-highlight').forEach(span => {
-        span.classList.remove('answer-highlight');
-      });
       
-      if (isAnswerPanelVisible) {
-        hideAnswerPanel();
-      }
-      
-      loadQuestion(1);
       hapticFeedback();
-    }
-    
-    function nextExercise() {
-      alert("Next exercise not implemented yet.");
-    }
-    
-    function goBack() {
-      history.back();
-    }
-    
-    function goHome() {
-      location.href = "/";
     }
     
     function showScore() {
