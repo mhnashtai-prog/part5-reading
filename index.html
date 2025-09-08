@@ -4,14 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>INTUITY - Enhanced Reading Interface</title>
-
-  <!-- Fonts - EXACT INTUITY Integration -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      /* COMPLETE INTUITY Color System */
       --bg-primary: #1a2332;
       --bg-secondary: #243447;
       --card-bg: rgba(255, 255, 255, 0.08);
@@ -19,32 +16,20 @@
       --accent-gold: #f4a261;
       --accent-teal: #2dd4bf;
       --accent-lime: #32d74b;
-      --brick-red: #d14545;
       --accent-orange: #ff9500;
       --text-primary: #ffffff;
       --text-secondary: rgba(255, 255, 255, 0.7);
       --text-muted: rgba(255, 255, 255, 0.5);
-      --success: #10b981;
-      --badge-bg: rgba(45, 212, 191, 0.2);
-      
-      /* Original INTUITY Colors for exact reproduction */
       --intuity-gold: #ffd54f;
       --intuity-teal: #26a69a;
-      
-      /* Interactive Quiz Colors */
       --btn-grey: rgba(255, 255, 255, 0.2);
-      
-      /* Spacing */
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
       --space-lg: 1.5rem;
       --space-xl: 2rem;
-      
-      /* Effects */
       --blur: blur(20px);
       --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.4);
     }
 
     * {
@@ -60,10 +45,9 @@
       min-height: 100vh;
       line-height: 1.6;
       overflow-x: hidden;
-      padding-bottom: 70px; /* space for footer */
+      padding-bottom: 70px;
     }
 
-    /* 🌟 Constellation Background */
     .constellation-bg {
       position: fixed;
       top: 0;
@@ -94,16 +78,14 @@
       100% { opacity: 0.8; }
     }
 
-    /* 🎯 INTUITY Header - Updated with Navigation */
     .header {
       position: sticky;
       top: 0;
       z-index: 100;
       background: rgba(26, 35, 50, 0.9);
       backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
       border-bottom: 1px solid var(--card-border);
-      padding: 2px 8px;
+      padding: 8px;
     }
 
     .header-content {
@@ -115,7 +97,6 @@
       text-align: center;
     }
 
-    /* ✨ EXACT INTUITY Title Design */
     .brand-name {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 2.5rem;
@@ -124,11 +105,10 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
       position: relative;
     }
 
-    /* ✨ EXACT Sparkle Animation */
     .brand-name::after {
       content: '✨';
       position: absolute;
@@ -149,12 +129,11 @@
       }
     }
 
-    /* NEW: Author section with navigation buttons */
     .author-section {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4cm; /* Exactly 4cm between buttons */
+      gap: 2rem;
       margin-top: var(--space-xs);
     }
 
@@ -162,14 +141,11 @@
       font-size: 0.65rem;
       color: var(--text-muted);
       font-weight: 300;
-      white-space: nowrap;
     }
 
-    /* Navigation Buttons */
     .nav-btn {
       background: var(--card-bg);
       backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
       border: 1px solid var(--card-border);
       color: var(--text-primary);
       padding: var(--space-sm) var(--space-md);
@@ -182,7 +158,6 @@
       display: flex;
       align-items: center;
       gap: var(--space-xs);
-      flex-shrink: 0;
     }
 
     .nav-btn:hover {
@@ -191,19 +166,17 @@
       transform: translateY(-2px);
     }
 
-    /* 📖 Beautiful Passage Container */
     .passage-container {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--card-border);
       border-radius: 1rem;
       padding: var(--space-xl);
-      margin: var(--space-xl) var(--space-lg) var(--space-xl) var(--space-lg);
+      margin: var(--space-xl) var(--space-lg);
       line-height: 1.8;
       font-size: 1.05rem;
       position: relative;
       box-shadow: var(--shadow);
       backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
       transition: all 0.3s ease;
     }
 
@@ -217,7 +190,6 @@
       position: relative;
     }
 
-    /* 🌟 Answer Highlighting in Passage */
     .answer-highlight {
       background: var(--accent-lime) !important;
       color: #000 !important;
@@ -227,7 +199,6 @@
       transition: all 0.3s ease;
     }
 
-    /* 🫧 Question Bubble - SUPER COMPACT */
     .question-bubble {
       position: fixed;
       bottom: 70px;
@@ -235,7 +206,6 @@
       right: 6px;
       background: var(--card-bg);
       backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
       border-radius: 12px;
       padding: 0.75rem;
       box-shadow: var(--shadow);
@@ -246,7 +216,6 @@
       border: 1px solid var(--card-border);
     }
 
-    /* 🔘 Question Nav Buttons - SMALLER CIRCLES */
     .nav-buttons {
       display: flex;
       justify-content: center;
@@ -276,7 +245,6 @@
       color: #000;
     }
 
-    /* 📌 Question Text - BRICK COLOR */
     .question-text {
       font-weight: 600;
       margin-bottom: 0.5rem;
@@ -285,7 +253,6 @@
       line-height: 1.4;
     }
 
-    /* 📝 Options - SUPER COMPACT WITH A B C D */
     .options-container {
       display: grid;
       gap: 0.25rem;
@@ -339,36 +306,11 @@
       color: #000;
     }
 
-    /* NEW: Check Answers - User Performance Feedback */
-    .option.user-correct {
-      background: var(--accent-lime) !important;
-      color: #000 !important;
-      font-weight: 600;
-      border-color: var(--accent-lime) !important;
-    }
-
-    .option.user-correct .option-label {
-      background: #000 !important;
-      color: var(--accent-lime) !important;
-    }
-
-    .option.user-incorrect {
-      background: var(--accent-orange) !important; /* Orangy color */
-      color: #fff !important;
-      font-weight: 600;
-      border-color: var(--accent-orange) !important;
-    }
-
-    .option.user-incorrect .option-label {
-      background: #fff !important;
-      color: var(--accent-orange) !important;
-    }
-
-    /* Show correct answer in check mode */
+    /* ENHANCED FEEDBACK STYLES - MAXIMUM PRIORITY */
     .option.correct-answer {
       background: var(--accent-lime) !important;
       color: #000 !important;
-      font-weight: 600;
+      font-weight: 600 !important;
       border-color: var(--accent-lime) !important;
     }
 
@@ -377,11 +319,22 @@
       color: var(--accent-lime) !important;
     }
 
-    /* NEW: Key Mode - Answer Key Display */
+    .option.user-incorrect {
+      background: var(--accent-orange) !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      border-color: var(--accent-orange) !important;
+    }
+
+    .option.user-incorrect .option-label {
+      background: #fff !important;
+      color: var(--accent-orange) !important;
+    }
+
     .option.answer-key {
       background: var(--accent-lime) !important;
       color: #000 !important;
-      font-weight: 600;
+      font-weight: 600 !important;
       border-color: var(--accent-lime) !important;
     }
 
@@ -390,7 +343,6 @@
       color: var(--accent-lime) !important;
     }
 
-    /* 📱 iOS-Style Swipe Panel (Hidden by default) */
     .swipe-panel-container {
       position: fixed;
       bottom: 0;
@@ -407,7 +359,6 @@
       pointer-events: all;
     }
 
-    /* 🎯 Drag Handle Area */
     .drag-handle-area {
       position: absolute;
       bottom: 70px;
@@ -420,10 +371,6 @@
       align-items: flex-end;
       padding-bottom: 10px;
       cursor: grab;
-    }
-
-    .drag-handle-area:active {
-      cursor: grabbing;
     }
 
     .drag-handle {
@@ -439,16 +386,14 @@
       width: 50px;
     }
 
-    /* 📚 Answer Review Panel - Enhanced with Options */
     .answer-review-panel {
       position: absolute;
       bottom: 110px;
       left: 12px;
       right: 12px;
-      height: 400px; /* Increased height for more content */
+      height: 400px;
       background: var(--card-bg);
       backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
       border-radius: 12px;
       padding: 16px;
       box-shadow: var(--shadow);
@@ -506,7 +451,6 @@
       margin-bottom: 8px;
     }
 
-    /* NEW: Enhanced option styling in review panel */
     .review-option {
       margin: 3px 0;
       font-size: 0.7rem;
@@ -528,7 +472,6 @@
       flex-shrink: 0;
     }
 
-    /* 📍 Footer - Now 3 buttons */
     .footer {
       position: fixed;
       bottom: 0;
@@ -536,7 +479,6 @@
       right: 0;
       background: var(--card-bg);
       backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -565,29 +507,17 @@
       color: #000;
     }
 
-    /* 📱 Mobile Responsive */
     @media (max-width: 768px) {
       .brand-name {
         font-size: 2rem;
       }
 
-      .brand-name::after {
-        font-size: 1.2rem;
-        right: -15px;
-        top: -8px;
-      }
-
       .author-section {
-        gap: 2cm;
-      }
-
-      .nav-btn {
-        padding: 6px 10px;
-        font-size: 0.75rem;
+        gap: 1rem;
       }
 
       .passage-container {
-        margin: var(--space-lg) var(--space-md) var(--space-lg) var(--space-md);
+        margin: var(--space-lg) var(--space-md);
         padding: var(--space-lg);
         font-size: 1rem;
       }
@@ -596,121 +526,27 @@
         font-size: 0.7rem;
         padding: 0.5rem 0.2rem;
       }
-
-      .question-bubble {
-        left: 4px;
-        right: 4px;
-        padding: 0.6rem;
-        border-radius: 10px;
-      }
-
-      .nav-btn-question {
-        width: 1.2rem;
-        height: 1.2rem;
-        font-size: 0.65rem;
-      }
-
-      .question-text {
-        font-size: 0.75rem;
-        margin-bottom: 0.4rem;
-      }
-
-      .option {
-        padding: 0.3rem;
-        font-size: 0.7rem;
-      }
-
-      .option-label {
-        width: 1rem;
-        height: 1rem;
-        font-size: 0.6rem;
-      }
-
-      .answer-review-panel {
-        left: 8px;
-        right: 8px;
-        padding: 12px;
-        height: 350px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header {
-        padding: 1px 4px;
-      }
-
-      .brand-name {
-        font-size: 1.5rem;
-      }
-
-      .brand-name::after {
-        font-size: 1rem;
-        right: -12px;
-        top: -6px;
-      }
-
-      .author-section {
-        gap: 1.5cm;
-      }
-
-      .nav-btn {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-      }
-
-      .author-credit {
-        font-size: 0.6rem;
-      }
-
-      .passage-container {
-        margin: var(--space-md) var(--space-sm) 100px var(--space-sm);
-        padding: var(--space-md);
-        font-size: 0.95rem;
-      }
-
-      .footer button {
-        font-size: 0.65rem;
-        padding: 0.4rem 0.1rem;
-      }
-
-      .answer-review-panel {
-        height: 320px;
-      }
-    }
-
-    /* 💫 Haptic Feedback Simulation */
-    .haptic-feedback {
-      animation: haptic-vibrate 0.1s ease-in-out;
-    }
-
-    @keyframes haptic-vibrate {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-1px); }
-      75% { transform: translateX(1px); }
     }
   </style>
 </head>
 <body>
-  <!-- 🌟 Constellation Background -->
   <div class="constellation-bg" id="constellation"></div>
 
-  <!-- 🎯 INTUITY Header with Navigation -->
   <header class="header">
     <div class="header-content">
       <div class="brand-name">INTUITY</div>
       <div class="author-section">
-        <a href="../index.html" class="nav-btn">
+        <a href="#" class="nav-btn">
           <i class="fas fa-home"></i> Home
         </a>
         <div class="author-credit">by Majid Nashtai</div>
-        <a href="javascript:history.back()" class="nav-btn">
+        <a href="#" class="nav-btn">
           <i class="fas fa-arrow-left"></i> Back
         </a>
       </div>
     </div>
   </header>
 
-  <!-- 📖 Beautiful Passage Container -->
   <div class="passage-container" id="passage-content">
     <div class="passage-paragraph">
       The rapid advancement of <span id="answer-1">digital technology has fundamentally transformed</span> the landscape of education in the <span id="answer-5">21st century</span>.
@@ -726,14 +562,12 @@
     </div>
   </div>
 
-  <!-- 🫧 Question Bubble -->
   <div class="question-bubble">
     <div class="nav-buttons" id="nav-buttons"></div>
     <div class="question-text" id="question-text">Loading question...</div>
     <div class="options-container" id="options-container"></div>
   </div>
 
-  <!-- 📱 iOS-Style Answer Review Panel - Enhanced -->
   <div class="swipe-panel-container" id="swipe-panel">
     <div class="drag-handle-area" id="drag-handle-area">
       <div class="drag-handle"></div>
@@ -745,12 +579,11 @@
         <button class="close-btn" onclick="hideAnswerPanel()">×</button>
       </div>
       <div id="review-content">
-        <!-- Enhanced review content with all options -->
+        <!-- Review content will be generated here -->
       </div>
     </div>
   </div>
 
-  <!-- 📍 Footer - Score, Check Answers, Key -->
   <div class="footer">
     <button onclick="showScore()">Score</button>
     <button onclick="checkAnswers()">Check Answers</button>
@@ -758,7 +591,6 @@
   </div>
 
   <script>
-    // 📚 Sample Data
     const readingData = {
       questions: [
         { id: 1, text: "What is transforming education?", options: ["Books", "Technology", "Sports"], correct: 1 },
@@ -773,9 +605,8 @@
     let currentQuestion = 1;
     let userAnswers = {};
     let isAnswerPanelVisible = false;
-    let currentMode = 'normal'; // 'normal', 'check', 'key'
+    let currentMode = 'normal';
 
-    // 🌟 Create constellation
     function createConstellation() {
       const constellation = document.getElementById('constellation');
       for (let i = 0; i < 20; i++) {
@@ -788,7 +619,6 @@
       }
     }
 
-    // Load nav buttons
     const navButtons = document.getElementById('nav-buttons');
     readingData.questions.forEach((q) => {
       const btn = document.createElement('button');
@@ -798,42 +628,43 @@
       navButtons.appendChild(btn);
     });
 
-    // Load question WITH A B C D LABELS
     function loadQuestion(id) {
       currentQuestion = id;
       const q = readingData.questions[id - 1];
       document.getElementById('question-text').textContent = q.text;
 
-      // Update nav buttons state
       document.querySelectorAll('.nav-btn-question').forEach((btn, index) => {
         btn.classList.remove('active');
+        btn.classList.remove('answered');
         if (index + 1 === id) btn.classList.add('active');
         if (userAnswers[index + 1] !== undefined) btn.classList.add('answered');
       });
 
       const optionsContainer = document.getElementById('options-container');
       const labels = ['A', 'B', 'C', 'D'];
+      
       optionsContainer.innerHTML = q.options
         .map((opt, i) => {
           let optionClass = 'option';
           
-          // Basic selection state
           if (userAnswers[id] === i) optionClass += ' selected';
           
-          // Mode-specific styling
           if (currentMode === 'check') {
-            // CHECK ANSWERS: Always show correct answer in lime
+            console.log(`CHECK MODE: Question ${id}, Option ${i}, Correct: ${q.correct}, User: ${userAnswers[id]}`);
+            
             if (i === q.correct) {
               optionClass += ' correct-answer';
+              console.log(`✅ Added correct-answer to option ${i}`);
             }
-            // Show user's wrong selection in orange (if different from correct)
+            
             if (userAnswers[id] === i && i !== q.correct) {
               optionClass += ' user-incorrect';
+              console.log(`❌ Added user-incorrect to option ${i}`);
             }
           } else if (currentMode === 'key') {
-            // KEY: Show only correct answers
             if (i === q.correct) {
               optionClass += ' answer-key';
+              console.log(`🔑 Added answer-key to option ${i}`);
             }
           }
           
@@ -845,64 +676,20 @@
         .join('');
     }
 
-    // Select option - IMPROVED TO PREVENT JERKING
     function selectOption(index) {
-      if (currentMode === 'check' || currentMode === 'key') return; // Prevent selection in feedback modes
+      if (currentMode === 'check' || currentMode === 'key') return;
       
       userAnswers[currentQuestion] = index;
-      
-      // Update only the visual state without rebuilding entire container
-      updateOptionVisuals();
-      updateNavButtonState();
-      
-      // Gentler haptic feedback for mobile
-      if (window.innerWidth > 768) {
-        hapticFeedback();
-      }
+      loadQuestion(currentQuestion);
     }
 
-    // NEW: Update option visuals without rebuilding container
-    function updateOptionVisuals() {
-      const options = document.querySelectorAll('.option');
-      const selectedIndex = userAnswers[currentQuestion];
-      
-      options.forEach((option, index) => {
-        option.classList.remove('selected');
-        if (index === selectedIndex) {
-          option.classList.add('selected');
-        }
-      });
-    }
-
-    // NEW: Update nav button state separately
-    function updateNavButtonState() {
-      document.querySelectorAll('.nav-btn-question').forEach((btn, index) => {
-        btn.classList.remove('active');
-        btn.classList.remove('answered');
-        
-        if (index + 1 === currentQuestion) btn.classList.add('active');
-        if (userAnswers[index + 1] !== undefined) btn.classList.add('answered');
-      });
-    }
-
-    // 💫 Haptic Feedback
-    function hapticFeedback() {
-      document.body.classList.add('haptic-feedback');
-      setTimeout(() => {
-        document.body.classList.remove('haptic-feedback');
-      }, 100);
-    }
-
-    // 📱 Show Answer Panel (iOS Style)
     function showAnswerPanel() {
       const swipePanel = document.getElementById('swipe-panel');
       const answerPanel = document.getElementById('answer-review-panel');
       const passageContainer = document.getElementById('passage-content');
       
-      // Generate enhanced review content with all options
       createEnhancedReviewContent();
       
-      // Show panel
       swipePanel.classList.add('visible');
       setTimeout(() => {
         answerPanel.classList.add('visible');
@@ -910,11 +697,8 @@
       }, 50);
       
       isAnswerPanelVisible = true;
-      setupDragHandling();
-      hapticFeedback();
     }
 
-    // 📱 Hide Answer Panel
     function hideAnswerPanel() {
       const swipePanel = document.getElementById('swipe-panel');
       const answerPanel = document.getElementById('answer-review-panel');
@@ -929,10 +713,8 @@
       
       isAnswerPanelVisible = false;
       resetToNormalMode();
-      hapticFeedback();
     }
 
-    // 📋 Create Enhanced Review Content - NOW WITH ALL OPTIONS A, B, C, D
     function createEnhancedReviewContent() {
       const reviewContent = document.getElementById('review-content');
       const labels = ['A', 'B', 'C', 'D'];
@@ -954,82 +736,23 @@
       }).join('');
     }
 
-    // 🎯 Setup Drag Handling
-    function setupDragHandling() {
-      const dragHandle = document.getElementById('drag-handle-area');
-      const answerPanel = document.getElementById('answer-review-panel');
-      let isDragging = false;
-      let startY = 0;
-      let currentY = 0;
-
-      function startDrag(e) {
-        if (!isAnswerPanelVisible) return;
-        isDragging = true;
-        startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-        dragHandle.style.cursor = 'grabbing';
-      }
-
-      function drag(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        
-        currentY = (e.type === 'touchmove' ? e.touches[0].clientY : e.clientY) - startY;
-        
-        if (currentY > 0) {
-          answerPanel.style.transform = `translateY(${Math.min(currentY, 300)}px)`;
-        }
-      }
-
-      function endDrag() {
-        if (!isDragging) return;
-        isDragging = false;
-        dragHandle.style.cursor = 'grab';
-        
-        if (currentY > 100) {
-          hideAnswerPanel();
-        } else {
-          answerPanel.style.transform = 'translateY(0)';
-        }
-        
-        currentY = 0;
-      }
-
-      // Touch events
-      dragHandle.addEventListener('touchstart', startDrag, { passive: false });
-      document.addEventListener('touchmove', drag, { passive: false });
-      document.addEventListener('touchend', endDrag);
-
-      // Mouse events
-      dragHandle.addEventListener('mousedown', startDrag);
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('mouseup', endDrag);
-    }
-
-    // 🔍 CHECK ANSWERS - User Performance Feedback - IMPROVED
     function checkAnswers() {
-      console.log('CHECK ANSWERS clicked'); // Debug log
+      console.log('🔍 CHECK ANSWERS clicked');
+      console.log('User answers:', userAnswers);
       currentMode = 'check';
       
-      // Remove any text highlights first
       document.querySelectorAll('.answer-highlight').forEach(span => {
         span.classList.remove('answer-highlight');
       });
       
-      // Force reload current question with check mode styling
       loadQuestion(currentQuestion);
-      
-      // Show the answer review panel
       showAnswerPanel();
-      
-      hapticFeedback();
     }
 
-    // 🗝️ SHOW KEY - Answer Key + Text Association - IMPROVED  
     function showKey() {
-      console.log('KEY clicked'); // Debug log
+      console.log('🗝️ KEY clicked');
       currentMode = 'key';
       
-      // Highlight ALL text spans (answer-1 through answer-6)
       for (let i = 1; i <= 6; i++) {
         const passageSpan = document.getElementById(`answer-${i}`);
         if (passageSpan) {
@@ -1037,25 +760,17 @@
         }
       }
       
-      // Force reload current question with key mode styling
       loadQuestion(currentQuestion);
-      
-      // Show the answer review panel
       showAnswerPanel();
-      
-      hapticFeedback();
     }
 
-    // 🔄 Reset to normal mode
     function resetToNormalMode() {
       currentMode = 'normal';
       
-      // Remove all text highlights
       document.querySelectorAll('.answer-highlight').forEach(span => {
         span.classList.remove('answer-highlight');
       });
       
-      // Reload current question
       loadQuestion(currentQuestion);
     }
     
@@ -1063,16 +778,14 @@
       let score = 0;
       let totalQuestions = readingData.questions.length;
       
-      readingData.questions.forEach((q, i) => {
+      readingData.questions.forEach((q) => {
         if (userAnswers[q.id] === q.correct) score++;
       });
       
-      // Enhanced score display
       const percentage = Math.round((score / totalQuestions) * 100);
       alert(`🎯 Your Score: ${score}/${totalQuestions} correct answers (${percentage}%)`);
     }
 
-    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       createConstellation();
       loadQuestion(1);
