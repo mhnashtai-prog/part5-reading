@@ -20,6 +20,7 @@
       --accent-teal: #2dd4bf;
       --accent-lime: #32d74b;
       --brick-red: #d14545;
+      --accent-orange: #ff9500;
       --text-primary: #ffffff;
       --text-secondary: rgba(255, 255, 255, 0.7);
       --text-muted: rgba(255, 255, 255, 0.5);
@@ -352,15 +353,28 @@
     }
 
     .option.user-incorrect {
-      background: var(--brick-red) !important;
+      background: var(--accent-orange) !important; /* Orangy color */
       color: #fff !important;
       font-weight: 600;
-      border-color: var(--brick-red) !important;
+      border-color: var(--accent-orange) !important;
     }
 
     .option.user-incorrect .option-label {
       background: #fff !important;
-      color: var(--brick-red) !important;
+      color: var(--accent-orange) !important;
+    }
+
+    /* Show correct answer in check mode */
+    .option.correct-answer {
+      background: var(--accent-lime) !important;
+      color: #000 !important;
+      font-weight: 600;
+      border-color: var(--accent-lime) !important;
+    }
+
+    .option.correct-answer .option-label {
+      background: #000 !important;
+      color: var(--accent-lime) !important;
     }
 
     /* NEW: Key Mode - Answer Key Display */
@@ -808,15 +822,14 @@
           
           // Mode-specific styling
           if (currentMode === 'check') {
-            // CHECK ANSWERS: Show user performance
-            if (userAnswers[id] === i) {
-              if (i === q.correct) {
-                optionClass += ' user-correct'; // User got it right
-              } else {
-                optionClass += ' user-incorrect'; // User got it wrong
-              }
+            // CHECK ANSWERS: Always show correct answer in lime
+            if (i === q.correct) {
+              optionClass += ' correct-answer';
             }
-            // Don't highlight correct answer if user got it wrong
+            // Show user's wrong selection in orange (if different from correct)
+            if (userAnswers[id] === i && i !== q.correct) {
+              optionClass += ' user-incorrect';
+            }
           } else if (currentMode === 'key') {
             // KEY: Show only correct answers
             if (i === q.correct) {
@@ -915,6 +928,7 @@
       }, 400);
       
       isAnswerPanelVisible = false;
+      resetToNormalMode();
       hapticFeedback();
     }
 
@@ -1044,13 +1058,6 @@
       // Reload current question
       loadQuestion(currentQuestion);
     }
-
-    // Override hideAnswerPanel to reset mode
-    const originalHideAnswerPanel = hideAnswerPanel;
-    hideAnswerPanel = function() {
-      resetToNormalMode();
-      originalHideAnswerPanel();
-    };
     
     function showScore() {
       let score = 0;
