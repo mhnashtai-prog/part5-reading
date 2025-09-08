@@ -3,79 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>INTUITY Quantum - iPhone-Style Reading Cards</title>
-
-  <!-- Advanced Font Loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <title>iPhone-Style Reading Cards</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
   <style>
-    :root {
-      /* Quantum Color System - Dynamic & Adaptive */
-      --bg-primary: #0a0f1c;
-      --bg-secondary: #1a2332;
-      --bg-tertiary: #243447;
-      --surface-glass: rgba(255, 255, 255, 0.03);
-      --surface-elevated: rgba(255, 255, 255, 0.08);
-      --surface-interactive: rgba(255, 255, 255, 0.12);
-      
-      /* Advanced Color Palette */
-      --quantum-blue: #00d4ff;
-      --quantum-purple: #8b5cf6;
-      --quantum-green: #32d74b;
-      --quantum-orange: #ff6b35;
-      --quantum-pink: #ff3d71;
-      --quantum-yellow: #ffd700;
-      
-      /* Semantic Colors */
-      --accent-primary: var(--quantum-blue);
-      --accent-secondary: var(--quantum-purple);
-      --accent-success: var(--quantum-green);
-      --accent-warning: var(--quantum-orange);
-      --accent-error: var(--quantum-pink);
-      --accent-focus: var(--quantum-yellow);
-      
-      /* Text Hierarchy */
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.8);
-      --text-tertiary: rgba(255, 255, 255, 0.6);
-      --text-muted: rgba(255, 255, 255, 0.4);
-      
-      /* Advanced Spacing System */
-      --space-1: 0.25rem;
-      --space-2: 0.5rem;
-      --space-3: 0.75rem;
-      --space-4: 1rem;
-      --space-5: 1.25rem;
-      --space-6: 1.5rem;
-      --space-8: 2rem;
-      --space-10: 2.5rem;
-      --space-12: 3rem;
-      
-      /* Advanced Effects */
-      --blur-sm: blur(8px);
-      --blur-md: blur(16px);
-      --blur-lg: blur(24px);
-      --blur-xl: blur(40px);
-      
-      /* Dynamic Shadows */
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-      --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
-      --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
-      --shadow-xl: 0 24px 96px rgba(0, 0, 0, 0.4);
-      --shadow-glow: 0 0 20px currentColor;
-      
-      /* Animation Curves */
-      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-      --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
-      
-      /* iPhone-specific styling */
-      --iphone-corner-radius: 20px;
-      --iphone-card-radius: 14px;
-      --iphone-blur: blur(20px);
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -85,171 +17,57 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
-      color: var(--text-primary);
+      color: #ffffff;
       min-height: 100vh;
-      line-height: 1.6;
+      padding: 16px;
       overflow-x: hidden;
-      position: relative;
-      padding: var(--space-4);
     }
 
-    /* 🌌 Quantum Particle System */
-    .quantum-field {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    .particle {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: var(--accent-primary);
-      border-radius: 50%;
-      opacity: 0;
-      animation: quantumFloat 12s infinite linear;
-    }
-
-    .particle:nth-child(2n) { background: var(--accent-secondary); animation-delay: -3s; }
-    .particle:nth-child(3n) { background: var(--accent-success); animation-delay: -6s; }
-    .particle:nth-child(4n) { background: var(--accent-warning); animation-delay: -9s; }
-
-    @keyframes quantumFloat {
-      0% { 
-        opacity: 0; 
-        transform: translateY(100vh) translateX(0) scale(0); 
-      }
-      10% { 
-        opacity: 0.6; 
-        transform: translateY(90vh) translateX(20px) scale(1); 
-      }
-      90% { 
-        opacity: 0.6; 
-        transform: translateY(10vh) translateX(-20px) scale(1); 
-      }
-      100% { 
-        opacity: 0; 
-        transform: translateY(0) translateX(0) scale(0); 
-      }
-    }
-
-    /* 🎯 INTUITY Header */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: var(--iphone-blur);
-      border-radius: var(--iphone-corner-radius);
-      border: 1px solid var(--surface-interactive);
-      padding: var(--space-4);
-      margin-bottom: var(--space-6);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .brand-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffd54f 0%, #26a69a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      cursor: pointer;
-      transition: all 0.3s var(--ease-out-back);
-    }
-
-    .brand-name:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 10px var(--accent-success));
-    }
-
-    /* 📖 Reading Passage */
+    /* Reading Passage */
     .passage-container {
       max-width: 800px;
-      margin: 0 auto var(--space-4);
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: var(--iphone-blur);
-      border: 1px solid var(--surface-interactive);
-      border-radius: var(--iphone-corner-radius);
-      padding: var(--space-3);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .passage-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-3);
-      padding-bottom: var(--space-2);
-      border-bottom: 1px solid var(--surface-interactive);
+      margin: 0 auto 80px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 16px;
     }
 
     .passage-title {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-weight: 400;
-      color: var(--accent-primary);
+      color: #00d4ff;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: var(--space-1);
+      gap: 8px;
     }
 
-    .reading-time {
-      font-size: 0.65rem;
-      color: var(--text-tertiary);
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-
-    .passage-paragraph {
-      font-size: 0.8rem;
+    .passage-text {
+      font-size: 0.85rem;
       line-height: 1.4;
-      margin-bottom: var(--space-3);
-      transition: all 0.4s var(--ease-out-expo);
-      border-radius: 6px;
-      padding: var(--space-1);
+      margin-bottom: 12px;
       font-weight: 400;
-    }
-
-    .passage-paragraph.context-active {
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(139, 92, 246, 0.08));
-      border-left: 3px solid var(--accent-primary);
-      transform: translateX(8px);
-      box-shadow: var(--shadow-md);
     }
 
     .answer-highlight {
-      background: linear-gradient(135deg, var(--accent-success), var(--accent-primary)) !important;
-      color: var(--bg-primary) !important;
-      font-weight: 700 !important;
-      padding: var(--space-1) var(--space-3);
-      border-radius: 8px;
-      box-shadow: 0 0 20px var(--accent-success);
-      animation: answerPulse 0.8s var(--ease-out-back);
+      background: linear-gradient(135deg, #32d74b, #00d4ff);
+      color: #000;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 4px;
+      animation: pulse 0.6s ease;
     }
 
-    @keyframes answerPulse {
+    @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.02); }
       100% { transform: scale(1); }
     }
 
-    /* 📱 iPhone-Style Stacked Question Cards System */
-    .iphone-cards-container {
+    /* iPhone-Style Card Stack */
+    .cards-stack {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -257,649 +75,420 @@
       height: 100vh;
       pointer-events: none;
       z-index: 100;
-      overflow: hidden;
     }
 
     .question-card {
       position: absolute;
-      left: var(--space-4);
-      right: var(--space-4);
+      left: 16px;
+      right: 16px;
       background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: var(--iphone-blur);
-      border-radius: var(--iphone-card-radius) var(--iphone-card-radius) 0 0;
-      border: 1px solid var(--surface-interactive);
+      backdrop-filter: blur(20px);
+      border-radius: 16px 16px 0 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-bottom: none;
       box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
       pointer-events: all;
-      transition: all 0.4s var(--ease-out-expo);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       overflow: hidden;
-      min-height: 120px;
+      min-height: 140px;
     }
 
-    /* iPhone-Style Stacking - Each card slightly offset and smaller */
-    .question-card[data-question="1"] { 
+    /* Stacked positioning - iPhone style */
+    .question-card:nth-child(1) { 
       bottom: 0px; 
       z-index: 106;
-      transform: translateY(calc(100% - 60px)) scale(1);
+      transform: translateY(calc(100% - 50px)) scale(1);
     }
-    .question-card[data-question="2"] { 
+    .question-card:nth-child(2) { 
       bottom: 4px; 
       z-index: 105;
-      transform: translateY(calc(100% - 56px)) scale(0.98);
-      left: calc(var(--space-4) + 4px);
-      right: calc(var(--space-4) + 4px);
+      transform: translateY(calc(100% - 46px)) scale(0.98);
+      left: 20px;
+      right: 20px;
     }
-    .question-card[data-question="3"] { 
+    .question-card:nth-child(3) { 
       bottom: 8px; 
       z-index: 104;
-      transform: translateY(calc(100% - 52px)) scale(0.96);
-      left: calc(var(--space-4) + 8px);
-      right: calc(var(--space-4) + 8px);
+      transform: translateY(calc(100% - 42px)) scale(0.96);
+      left: 24px;
+      right: 24px;
     }
-    .question-card[data-question="4"] { 
+    .question-card:nth-child(4) { 
       bottom: 12px; 
       z-index: 103;
-      transform: translateY(calc(100% - 48px)) scale(0.94);
-      left: calc(var(--space-4) + 12px);
-      right: calc(var(--space-4) + 12px);
+      transform: translateY(calc(100% - 38px)) scale(0.94);
+      left: 28px;
+      right: 28px;
     }
-    .question-card[data-question="5"] { 
+    .question-card:nth-child(5) { 
       bottom: 16px; 
       z-index: 102;
-      transform: translateY(calc(100% - 44px)) scale(0.92);
-      left: calc(var(--space-4) + 16px);
-      right: calc(var(--space-4) + 16px);
+      transform: translateY(calc(100% - 34px)) scale(0.92);
+      left: 32px;
+      right: 32px;
     }
-    .question-card[data-question="6"] { 
+    .question-card:nth-child(6) { 
       bottom: 20px; 
       z-index: 101;
-      transform: translateY(calc(100% - 40px)) scale(0.90);
-      left: calc(var(--space-4) + 20px);
-      right: calc(var(--space-4) + 20px);
+      transform: translateY(calc(100% - 30px)) scale(0.90);
+      left: 36px;
+      right: 36px;
     }
 
-    /* Expanded States */
+    /* Expanded state */
     .question-card.expanded {
-      transform: translateY(20%) scale(1) !important;
-      z-index: 200 !important;
-      left: var(--space-4) !important;
-      right: var(--space-4) !important;
-      height: 70vh !important;
-      box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.8);
-    }
-
-    .question-card.full-expanded {
       transform: translateY(10%) scale(1) !important;
       z-index: 200 !important;
-      left: var(--space-2) !important;
-      right: var(--space-2) !important;
-      height: 85vh !important;
-      box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.9);
+      left: 16px !important;
+      right: 16px !important;
+      height: 80vh !important;
     }
 
-    /* Card Handle - iPhone style */
+    /* Card handle */
     .card-handle {
       position: absolute;
       top: 8px;
       left: 50%;
       transform: translateX(-50%);
       width: 36px;
-      height: 5px;
+      height: 4px;
       background: rgba(255, 255, 255, 0.3);
-      border-radius: 3px;
+      border-radius: 2px;
       cursor: grab;
       transition: all 0.3s ease;
     }
 
     .card-handle:hover {
-      background: var(--accent-primary);
+      background: #00d4ff;
       width: 44px;
     }
 
-    .card-handle:active {
-      cursor: grabbing;
-    }
-
-    /* Card Header */
+    /* Card content */
     .card-header {
-      padding: var(--space-4) var(--space-4) var(--space-2);
+      padding: 16px 12px 8px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .card-question-info {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-    }
-
     .card-question-number {
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      color: var(--bg-primary);
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.8rem;
-      padding: var(--space-2) var(--space-3);
-      border-radius: 12px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .card-question-difficulty {
-      background: var(--surface-elevated);
-      color: var(--text-secondary);
+      background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+      color: #000;
       font-size: 0.7rem;
-      font-weight: 600;
-      padding: var(--space-1) var(--space-2);
+      font-weight: 400;
+      padding: 4px 8px;
       border-radius: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
     .card-status {
-      display: flex;
-      align-items: center;
-      gap: var(--space-1);
-      font-size: 0.7rem;
-      color: var(--text-tertiary);
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .card-status.answered {
-      color: var(--accent-success);
+      color: #32d74b;
     }
 
-    .card-status.current {
-      color: var(--accent-primary);
-    }
-
-    /* Card Content */
     .card-question-text {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      line-height: 1.5;
-      padding: var(--space-3) var(--space-4);
-      background: var(--surface-glass);
-      margin: var(--space-3) var(--space-4) 0;
-      border-radius: 12px;
-      border-left: 3px solid var(--accent-primary);
+      font-size: 0.8rem;
+      font-weight: 400;
+      line-height: 1.3;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      margin: 8px 12px;
+      border-radius: 8px;
+      border-left: 2px solid #00d4ff;
     }
 
     .card-options {
-      padding: var(--space-3) var(--space-4) var(--space-4);
+      padding: 8px 12px 12px;
       display: flex;
       flex-direction: column;
-      gap: var(--space-2);
+      gap: 4px;
       flex: 1;
       overflow-y: auto;
     }
 
     .card-option {
-      background: var(--surface-glass);
-      border: 1px solid var(--surface-interactive);
-      border-radius: 12px;
-      padding: var(--space-3);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 6px 8px;
       cursor: pointer;
-      transition: all 0.3s var(--ease-out-expo);
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: var(--space-3);
-      font-size: 0.85rem;
+      gap: 8px;
+      font-size: 0.75rem;
+      min-height: 28px;
     }
 
     .card-option:hover {
-      border-color: var(--accent-primary);
-      background: rgba(0, 212, 255, 0.08);
-      transform: translateX(4px);
-      box-shadow: var(--shadow-sm);
+      border-color: #00d4ff;
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateX(2px);
     }
 
     .card-option.selected {
-      border-color: var(--accent-primary);
-      background: rgba(0, 212, 255, 0.15);
-      box-shadow: 0 0 16px rgba(0, 212, 255, 0.2);
+      border-color: #00d4ff;
+      background: rgba(0, 212, 255, 0.2);
     }
 
     .card-option.correct {
-      border-color: var(--accent-success) !important;
-      background: var(--accent-success) !important;
-      color: var(--bg-primary) !important;
-      font-weight: 600;
+      border-color: #32d74b !important;
+      background: #32d74b !important;
+      color: #000 !important;
+      font-weight: 500;
     }
 
     .card-option.incorrect {
-      border-color: var(--accent-error) !important;
+      border-color: #ff3d71 !important;
       background: rgba(255, 61, 113, 0.2) !important;
-      color: var(--accent-error) !important;
+      color: #ff3d71 !important;
     }
 
-    .card-option-label {
-      background: var(--surface-elevated);
-      color: var(--text-primary);
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.75rem;
-      width: 24px;
-      height: 24px;
+    .option-label {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 400;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: all 0.3s var(--ease-out-back);
     }
 
-    .card-option:hover .card-option-label {
-      background: var(--accent-primary);
-      color: var(--bg-primary);
-      transform: scale(1.1);
-    }
-
-    .card-option-text {
+    .option-text {
       flex: 1;
-      line-height: 1.4;
+      line-height: 1.2;
+      font-weight: 400;
     }
 
     /* Controls */
-    .controls-container {
+    .controls {
       position: fixed;
-      top: var(--space-4);
-      right: var(--space-4);
+      top: 20px;
+      right: 20px;
       display: flex;
       flex-direction: column;
-      gap: var(--space-2);
+      gap: 8px;
       z-index: 1000;
     }
 
     .control-btn {
       background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: var(--iphone-blur);
-      border: 1px solid var(--surface-interactive);
-      border-radius: 12px;
-      padding: var(--space-2) var(--space-3);
-      color: var(--text-primary);
-      font-size: 0.8rem;
-      font-weight: 600;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 400;
       cursor: pointer;
-      transition: all 0.3s var(--ease-out-expo);
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      min-width: 120px;
+      transition: all 0.3s ease;
     }
 
     .control-btn:hover {
-      background: var(--accent-primary);
-      color: var(--bg-primary);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      background: #00d4ff;
+      color: #000;
     }
 
-    .control-btn.active {
-      background: var(--accent-success);
-      color: var(--bg-primary);
-    }
-
-    /* Stack Counter */
-    .stack-counter {
+    /* Counter */
+    .counter {
       position: fixed;
-      bottom: var(--space-4);
-      right: var(--space-4);
+      bottom: 20px;
+      right: 20px;
       background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: var(--iphone-blur);
-      border-radius: 16px;
-      padding: var(--space-2) var(--space-3);
-      font-size: 0.8rem;
-      color: var(--text-secondary);
+      backdrop-filter: blur(20px);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.7);
       z-index: 150;
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      border: 1px solid var(--surface-interactive);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .stack-number {
-      color: var(--accent-primary);
-      font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
+    .counter-number {
+      color: #00d4ff;
+      font-weight: 500;
     }
 
-    /* Responsive Design */
+    /* Responsive */
     @media (max-width: 768px) {
       .question-card {
-        left: var(--space-2);
-        right: var(--space-2);
+        left: 12px;
+        right: 12px;
       }
-
-      .question-card[data-question="2"] { 
-        left: calc(var(--space-2) + 3px);
-        right: calc(var(--space-2) + 3px);
-      }
-      .question-card[data-question="3"] { 
-        left: calc(var(--space-2) + 6px);
-        right: calc(var(--space-2) + 6px);
-      }
-      .question-card[data-question="4"] { 
-        left: calc(var(--space-2) + 9px);
-        right: calc(var(--space-2) + 9px);
-      }
-      .question-card[data-question="5"] { 
-        left: calc(var(--space-2) + 12px);
-        right: calc(var(--space-2) + 12px);
-      }
-      .question-card[data-question="6"] { 
-        left: calc(var(--space-2) + 15px);
-        right: calc(var(--space-2) + 15px);
-      }
-
-      .controls-container {
-        top: var(--space-2);
-        right: var(--space-2);
-      }
-
-      .control-btn {
-        min-width: 100px;
-        font-size: 0.75rem;
-        padding: var(--space-1) var(--space-2);
-      }
-    }
-
-    /* Focus Management */
-    .focus-trap:focus-visible {
-      outline: 2px solid var(--accent-focus);
-      outline-offset: 2px;
-    }
-
-    /* Celebration Modal */
-    .celebration-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: var(--iphone-blur);
-      border: 2px solid var(--accent-primary);
-      border-radius: var(--iphone-corner-radius);
-      padding: var(--space-6);
-      text-align: center;
-      z-index: 2000;
-      min-width: 300px;
-      animation: celebrationEntry 0.6s var(--ease-out-back);
-      box-shadow: 0 0 60px rgba(0, 212, 255, 0.3);
-    }
-
-    @keyframes celebrationEntry {
-      0% { 
-        opacity: 0; 
-        transform: translate(-50%, -50%) scale(0.7); 
-      }
-      100% { 
-        opacity: 1; 
-        transform: translate(-50%, -50%) scale(1); 
-      }
-    }
-
-    .celebration-icon {
-      font-size: 3rem;
-      margin-bottom: var(--space-3);
-      animation: celebrationBounce 1s infinite alternate;
-    }
-
-    @keyframes celebrationBounce {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.1); }
-    }
-
-    .celebration-title {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--accent-primary);
-      margin-bottom: var(--space-2);
-    }
-
-    .celebration-subtitle {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: var(--space-4);
+      
+      .question-card:nth-child(2) { left: 16px; right: 16px; }
+      .question-card:nth-child(3) { left: 20px; right: 20px; }
+      .question-card:nth-child(4) { left: 24px; right: 24px; }
+      .question-card:nth-child(5) { left: 28px; right: 28px; }
+      .question-card:nth-child(6) { left: 32px; right: 32px; }
     }
   </style>
 </head>
 
 <body>
-  <!-- 🌌 Quantum Particle System -->
-  <div class="quantum-field" id="quantum-field"></div>
-
-  <!-- 🎯 Header -->
-  <header class="header">
-    <div class="header-content">
-      <div class="brand-name">INTUITY</div>
-      <div style="font-size: 0.7rem; color: var(--text-muted);">iPhone-Style Reading Cards</div>
-    </div>
-  </header>
-
-  <!-- 📖 Reading Passage -->
+  <!-- Reading Passage -->
   <div class="passage-container">
-    <div class="passage-header">
-      <div class="passage-title">
-        <i class="fas fa-book-open"></i>
-        Digital Education Transformation
-      </div>
-      <div class="reading-time">
-        <i class="fas fa-clock"></i>
-        3 min read
-      </div>
+    <div class="passage-title">
+      📖 Digital Education Transformation
     </div>
 
-    <div class="passage-paragraph" data-ref="1">
+    <div class="passage-text">
       The rapid advancement of <span id="answer-1">digital technology has fundamentally transformed</span> the landscape of education in the <span id="answer-5">21st century</span>.
     </div>
     
-    <div class="passage-paragraph" data-ref="2">
+    <div class="passage-text">
       <span id="answer-2">Educational institutions worldwide</span> have embraced various forms of technology integration, from simple presentation tools to sophisticated learning management systems that enable personalized learning experiences.
     </div>
     
-    <div class="passage-paragraph" data-ref="3">
+    <div class="passage-text">
       However, the shift to digital education <span id="answer-3">is not without its challenges</span>. Issues such as the digital divide, privacy concerns, and the need for teacher training continue to pose significant obstacles to seamless technology integration.
     </div>
     
-    <div class="passage-paragraph" data-ref="4">
+    <div class="passage-text">
       Despite these concerns, extensive research suggests that <span id="answer-4">when properly implemented, digital tools</span> can <span id="answer-6">enhance learning outcomes</span> significantly by providing interactive, accessible, and data-driven educational experiences.
     </div>
   </div>
 
-  <!-- 🎮 Controls -->
-  <div class="controls-container">
-    <button class="control-btn" onclick="toggleAllCards()">
-      <i class="fas fa-layer-group"></i>
-      <span id="toggle-text">Stack Cards</span>
-    </button>
-    <button class="control-btn" onclick="showAnswers()">
-      <i class="fas fa-eye"></i>
-      Show Answers
-    </button>
-    <button class="control-btn" onclick="resetCards()">
-      <i class="fas fa-refresh"></i>
-      Reset
-    </button>
-    <button class="control-btn" onclick="showAnalytics()">
-      <i class="fas fa-chart-bar"></i>
-      Analytics
-    </button>
+  <!-- Controls -->
+  <div class="controls">
+    <button class="control-btn" onclick="stackAllCards()">Stack All</button>
+    <button class="control-btn" onclick="showAnswers()">Show Answers</button>
+    <button class="control-btn" onclick="resetAll()">Reset</button>
   </div>
 
-  <!-- 📱 iPhone-Style Stacked Question Cards -->
-  <div class="iphone-cards-container" id="cards-container">
-    <!-- Cards will be generated dynamically -->
+  <!-- iPhone-Style Card Stack -->
+  <div class="cards-stack" id="cards-stack">
+    <!-- 6 cards will be generated here -->
   </div>
 
-  <!-- 📊 Stack Counter -->
-  <div class="stack-counter">
-    <i class="fas fa-stack-overflow"></i>
-    <span class="stack-number" id="answered-count">0</span>
-    <span>/</span>
-    <span class="stack-number">6</span>
-    <span>answered</span>
+  <!-- Counter -->
+  <div class="counter">
+    <span class="counter-number" id="answered-count">0</span>/6 answered
   </div>
 
   <script>
-    // 📊 Application State
-    const AppState = {
-      cardsStacked: true,
-      currentCard: null,
-      userAnswers: {},
-      startTime: Date.now(),
-      questionData: [
-        {
-          id: 1,
-          text: "According to the passage, what has fundamentally transformed education?",
-          options: [
-            "Traditional teaching methods",
-            "Digital technology advancement", 
-            "Student behavior changes",
-            "Government policies"
-          ],
-          correct: 1,
-          difficulty: "easy",
-          explanation: "The passage explicitly states that 'digital technology has fundamentally transformed' education.",
-          passageRef: 1
-        },
-        {
-          id: 2,
-          text: "Who has embraced technology integration according to the text?",
-          options: [
-            "Only private schools",
-            "Educational institutions worldwide",
-            "Technology companies", 
-            "Government agencies only"
-          ],
-          correct: 1,
-          difficulty: "easy",
-          explanation: "The text clearly states 'Educational institutions worldwide have embraced' technology integration.",
-          passageRef: 2
-        },
-        {
-          id: 3,
-          text: "What does the passage suggest about digital education challenges?",
-          options: [
-            "They have been completely solved",
-            "They are not without challenges",
-            "They only affect developing countries",
-            "They are insurmountable"
-          ],
-          correct: 1,
-          difficulty: "medium",
-          explanation: "The passage states digital education 'is not without its challenges', indicating obstacles exist.",
-          passageRef: 3
-        },
-        {
-          id: 4,
-          text: "Under what condition do digital tools enhance learning outcomes?",
-          options: [
-            "When properly implemented",
-            "When used without training",
-            "When replacing all traditional methods",
-            "When used only by experts"
-          ],
-          correct: 0,
-          difficulty: "medium", 
-          explanation: "Research suggests digital tools enhance outcomes 'when properly implemented'.",
-          passageRef: 4
-        },
-        {
-          id: 5,
-          text: "In which century does this educational transformation take place?",
-          options: [
-            "20th century",
-            "21st century",
-            "19th century", 
-            "22nd century"
-          ],
-          correct: 1,
-          difficulty: "easy",
-          explanation: "The passage specifically references the '21st century' as the time of transformation.",
-          passageRef: 1
-        },
-        {
-          id: 6,
-          text: "What can be enhanced according to research mentioned in the passage?",
-          options: [
-            "Teacher salaries",
-            "School buildings",
-            "Learning outcomes",
-            "Technology costs"
-          ],
-          correct: 2,
-          difficulty: "easy",
-          explanation: "Research suggests digital tools can 'enhance learning outcomes' significantly.",
-          passageRef: 4
-        }
-      ]
-    };
-
-    // 🌌 Initialize Particle System
-    function initializeQuantumField() {
-      const field = document.getElementById('quantum-field');
-      
-      for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 12 + 's';
-        particle.style.animationDuration = (8 + Math.random() * 6) + 's';
-        field.appendChild(particle);
+    // Question data
+    const questions = [
+      {
+        id: 1,
+        text: "According to the passage, what has fundamentally transformed education?",
+        options: [
+          "Traditional teaching methods",
+          "Digital technology advancement",
+          "Student behavior changes", 
+          "Government policies"
+        ],
+        correct: 1
+      },
+      {
+        id: 2,
+        text: "Who has embraced technology integration according to the text?",
+        options: [
+          "Only private schools",
+          "Educational institutions worldwide",
+          "Technology companies",
+          "Government agencies only"
+        ],
+        correct: 1
+      },
+      {
+        id: 3,
+        text: "What does the passage suggest about digital education challenges?",
+        options: [
+          "They have been completely solved",
+          "They are not without challenges",
+          "They only affect developing countries",
+          "They are insurmountable"
+        ],
+        correct: 1
+      },
+      {
+        id: 4,
+        text: "Under what condition do digital tools enhance learning outcomes?",
+        options: [
+          "When properly implemented",
+          "When used without training",
+          "When replacing all traditional methods",
+          "When used only by experts"
+        ],
+        correct: 0
+      },
+      {
+        id: 5,
+        text: "In which century does this educational transformation take place?",
+        options: [
+          "20th century",
+          "21st century",
+          "19th century",
+          "22nd century"
+        ],
+        correct: 1
+      },
+      {
+        id: 6,
+        text: "What can be enhanced according to research mentioned in the passage?",
+        options: [
+          "Teacher salaries",
+          "School buildings", 
+          "Learning outcomes",
+          "Technology costs"
+        ],
+        correct: 2
       }
-    }
+    ];
 
-    // 📱 Generate iPhone-Style Cards
+    // App state
+    let userAnswers = {};
+    let expandedCard = null;
+
+    // Generate all 6 cards
     function generateCards() {
-      const container = document.getElementById('cards-container');
+      const container = document.getElementById('cards-stack');
       const labels = ['A', 'B', 'C', 'D'];
       
-      container.innerHTML = AppState.questionData.map((question) => {
-        return `
-          <div class="question-card" data-question="${question.id}" id="card-${question.id}">
-            <div class="card-handle" data-question="${question.id}"></div>
-            
-            <div class="card-header">
-              <div class="card-question-info">
-                <div class="card-question-number">Q${question.id}</div>
-                <div class="card-question-difficulty">${question.difficulty}</div>
-              </div>
-              <div class="card-status" id="status-${question.id}">
-                <i class="fas fa-circle"></i>
-                <span>Unanswered</span>
-              </div>
-            </div>
-            
-            <div class="card-question-text">${question.text}</div>
-            
-            <div class="card-options">
-              ${question.options.map((option, optionIndex) => `
-                <div class="card-option" 
-                     data-question="${question.id}" 
-                     data-option="${optionIndex}"
-                     onclick="selectOption(${question.id}, ${optionIndex})">
-                  <div class="card-option-label">${labels[optionIndex]}</div>
-                  <div class="card-option-text">${option}</div>
-                </div>
-              `).join('')}
-            </div>
+      container.innerHTML = questions.map((question, index) => `
+        <div class="question-card" data-question="${question.id}" id="card-${question.id}">
+          <div class="card-handle" data-question="${question.id}"></div>
+          
+          <div class="card-header">
+            <div class="card-question-number">Q${question.id}</div>
+            <div class="card-status" id="status-${question.id}">Unanswered</div>
           </div>
-        `;
-      }).join('');
+          
+          <div class="card-question-text">${question.text}</div>
+          
+          <div class="card-options">
+            ${question.options.map((option, optionIndex) => `
+              <div class="card-option" 
+                   data-question="${question.id}" 
+                   data-option="${optionIndex}"
+                   onclick="selectOption(${question.id}, ${optionIndex})">
+                <div class="option-label">${labels[optionIndex]}</div>
+                <div class="option-text">${option}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
       
-      initializeCardGestures();
+      initializeGestures();
     }
 
-    // 🖱️ Initialize Card Gestures
-    function initializeCardGestures() {
-      AppState.questionData.forEach(question => {
+    // Initialize drag/swipe gestures
+    function initializeGestures() {
+      questions.forEach(question => {
         const card = document.getElementById(`card-${question.id}`);
         const handle = card.querySelector('.card-handle');
         
         let startY = null;
-        let currentY = null;
         let isDragging = false;
         
         // Mouse events
@@ -913,48 +502,24 @@
         document.addEventListener('mousemove', (e) => {
           if (!isDragging || !startY) return;
           
-          currentY = e.clientY;
-          const deltaY = currentY - startY;
+          const deltaY = e.clientY - startY;
           
-          // Calculate new position based on drag
-          const currentTransform = card.style.transform;
-          const match = currentTransform.match(/translateY\(([^)]+)\)/);
-          const currentY_val = match ? parseFloat(match[1]) : 0;
-          
-          const newY = Math.min(Math.max(currentY_val + (deltaY * 0.5), -50), 100);
-          
-          card.style.transform = currentTransform.replace(
-            /translateY\([^)]+\)/, 
-            `translateY(${newY}%)`
-          );
-          
-          e.preventDefault();
-        });
-        
-        document.addEventListener('mouseup', (e) => {
-          if (!isDragging) return;
-          
-          const deltaY = currentY - startY;
-          card.style.transition = 'all 0.4s var(--ease-out-expo)';
-          
-          // Determine final state based on drag distance
-          if (Math.abs(deltaY) > 50) {
-            if (deltaY < 0) {
-              expandCard(question.id);
-            } else {
-              stackCard(question.id);
-            }
-          } else {
-            // Snap back to original position
-            resetCardPosition(question.id);
+          if (deltaY < -30) {
+            expandCard(question.id);
+          } else if (deltaY > 30) {
+            stackCard(question.id);
           }
-          
-          isDragging = false;
-          startY = null;
-          currentY = null;
         });
         
-        // Touch events for mobile
+        document.addEventListener('mouseup', () => {
+          if (isDragging) {
+            card.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+            isDragging = false;
+            startY = null;
+          }
+        });
+        
+        // Touch events
         handle.addEventListener('touchstart', (e) => {
           startY = e.touches[0].clientY;
           isDragging = true;
@@ -965,47 +530,28 @@
         handle.addEventListener('touchmove', (e) => {
           if (!isDragging || !startY) return;
           
-          currentY = e.touches[0].clientY;
-          const deltaY = currentY - startY;
+          const deltaY = e.touches[0].clientY - startY;
           
-          const currentTransform = card.style.transform;
-          const match = currentTransform.match(/translateY\(([^)]+)\)/);
-          const currentY_val = match ? parseFloat(match[1]) : 0;
-          
-          const newY = Math.min(Math.max(currentY_val + (deltaY * 0.5), -50), 100);
-          
-          card.style.transform = currentTransform.replace(
-            /translateY\([^)]+\)/, 
-            `translateY(${newY}%)`
-          );
+          if (deltaY < -30) {
+            expandCard(question.id);
+          } else if (deltaY > 30) {
+            stackCard(question.id);
+          }
           
           e.preventDefault();
         }, { passive: false });
         
-        handle.addEventListener('touchend', (e) => {
-          if (!isDragging) return;
-          
-          const deltaY = currentY - startY;
-          card.style.transition = 'all 0.4s var(--ease-out-expo)';
-          
-          if (Math.abs(deltaY) > 50) {
-            if (deltaY < 0) {
-              expandCard(question.id);
-            } else {
-              stackCard(question.id);
-            }
-          } else {
-            resetCardPosition(question.id);
+        handle.addEventListener('touchend', () => {
+          if (isDragging) {
+            card.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+            isDragging = false;
+            startY = null;
           }
-          
-          isDragging = false;
-          startY = null;
-          currentY = null;
-        }, { passive: false });
+        });
         
         // Click to toggle
         handle.addEventListener('click', () => {
-          if (card.classList.contains('expanded') || card.classList.contains('full-expanded')) {
+          if (expandedCard === question.id) {
             stackCard(question.id);
           } else {
             expandCard(question.id);
@@ -1014,65 +560,48 @@
       });
     }
 
-    // 📱 Card State Management
+    // Expand a specific card
     function expandCard(questionId) {
-      const card = document.getElementById(`card-${questionId}`);
-      
-      // Close other expanded cards
-      document.querySelectorAll('.question-card').forEach(c => {
-        c.classList.remove('expanded', 'full-expanded');
+      // Stack all other cards first
+      questions.forEach(q => {
+        if (q.id !== questionId) {
+          stackCard(q.id);
+        }
       });
       
+      const card = document.getElementById(`card-${questionId}`);
       card.classList.add('expanded');
-      AppState.currentCard = questionId;
-      
-      // Highlight related passage
-      highlightPassageContext(AppState.questionData[questionId - 1].passageRef);
-      
-      showCelebration(`📱 Question ${questionId}`, 'Swipe up for full view • Tap handle to close', 2000);
+      expandedCard = questionId;
     }
 
+    // Stack a specific card
     function stackCard(questionId) {
       const card = document.getElementById(`card-${questionId}`);
-      card.classList.remove('expanded', 'full-expanded');
-      resetCardPosition(questionId);
-      AppState.currentCard = null;
-      
-      // Clear passage highlighting
-      document.querySelectorAll('.passage-paragraph').forEach(p => {
-        p.classList.remove('context-active');
-      });
+      card.classList.remove('expanded');
+      if (expandedCard === questionId) {
+        expandedCard = null;
+      }
     }
 
-    function resetCardPosition(questionId) {
-      const card = document.getElementById(`card-${questionId}`);
-      card.style.transform = '';
-      card.classList.remove('expanded', 'full-expanded');
-    }
-
-    // 🎯 Option Selection
+    // Select an option
     function selectOption(questionId, optionIndex) {
-      const question = AppState.questionData[questionId - 1];
+      const question = questions[questionId - 1];
       const isCorrect = optionIndex === question.correct;
       
-      AppState.userAnswers[questionId] = optionIndex;
+      userAnswers[questionId] = optionIndex;
       
       // Update visual state
       updateCardOptions(questionId);
       updateStatus(questionId, isCorrect);
-      updateAnsweredCount();
+      updateCounter();
       
-      // Show feedback
-      const title = isCorrect ? '✅ Correct!' : '❌ Try Again';
-      showCelebration(title, question.explanation, 3000);
-      
-      // Highlight passage answer
-      highlightPassageAnswer(questionId);
+      // Highlight answer in passage
+      highlightAnswer(questionId);
     }
 
     function updateCardOptions(questionId) {
-      const question = AppState.questionData[questionId - 1];
-      const userAnswer = AppState.userAnswers[questionId];
+      const question = questions[questionId - 1];
+      const userAnswer = userAnswers[questionId];
       const cardOptions = document.querySelectorAll(`[data-question="${questionId}"].card-option`);
       
       cardOptions.forEach((option, optionIndex) => {
@@ -1093,94 +622,53 @@
     function updateStatus(questionId, isCorrect) {
       const statusElement = document.getElementById(`status-${questionId}`);
       statusElement.classList.add('answered');
-      statusElement.innerHTML = `
-        <i class="fas fa-check-circle"></i>
-        <span>${isCorrect ? 'Correct' : 'Answered'}</span>
-      `;
+      statusElement.textContent = isCorrect ? 'Correct' : 'Answered';
     }
 
-    function updateAnsweredCount() {
-      const count = Object.keys(AppState.userAnswers).length;
+    function updateCounter() {
+      const count = Object.keys(userAnswers).length;
       document.getElementById('answered-count').textContent = count;
     }
 
-    // 🎯 Passage Highlighting
-    function highlightPassageContext(passageRef) {
-      document.querySelectorAll('.passage-paragraph').forEach(p => {
-        p.classList.remove('context-active');
-      });
-      
-      if (passageRef) {
-        const paragraph = document.querySelector(`[data-ref="${passageRef}"]`);
-        if (paragraph) {
-          paragraph.classList.add('context-active');
-        }
-      }
-    }
-
-    function highlightPassageAnswer(questionId) {
+    function highlightAnswer(questionId) {
       const span = document.getElementById(`answer-${questionId}`);
       if (span) {
         span.classList.add('answer-highlight');
         setTimeout(() => {
           span.classList.remove('answer-highlight');
-        }, 4000);
+        }, 3000);
       }
     }
 
-    // 🎮 Control Functions
-    function toggleAllCards() {
-      const toggleBtn = document.getElementById('toggle-text');
-      
-      if (AppState.cardsStacked) {
-        // Expand all cards in sequence
-        AppState.questionData.forEach((question, index) => {
-          setTimeout(() => {
-            expandCard(question.id);
-          }, index * 200);
-        });
-        toggleBtn.textContent = 'Stack Cards';
-        AppState.cardsStacked = false;
-      } else {
-        // Stack all cards
-        AppState.questionData.forEach(question => {
-          stackCard(question.id);
-        });
-        toggleBtn.textContent = 'Expand All';
-        AppState.cardsStacked = true;
-      }
+    // Control functions
+    function stackAllCards() {
+      questions.forEach(q => stackCard(q.id));
     }
 
     function showAnswers() {
-      // Highlight all answers in the passage
       for (let i = 1; i <= 6; i++) {
         setTimeout(() => {
           const span = document.getElementById(`answer-${i}`);
           if (span) {
             span.classList.add('answer-highlight');
           }
-        }, i * 300);
+        }, i * 200);
       }
       
-      // Remove highlights after delay
       setTimeout(() => {
         document.querySelectorAll('.answer-highlight').forEach(span => {
           span.classList.remove('answer-highlight');
         });
-      }, 8000);
-      
-      showCelebration('👁️ All Answers Revealed', 'Answer locations highlighted in passage', 2000);
+      }, 6000);
     }
 
-    function resetCards() {
-      AppState.userAnswers = {};
-      AppState.currentCard = null;
-      AppState.cardsStacked = true;
+    function resetAll() {
+      userAnswers = {};
+      expandedCard = null;
       
-      // Reset all visual states
+      // Reset visual states
       document.querySelectorAll('.question-card').forEach(card => {
-        card.classList.remove('expanded', 'full-expanded');
-        card.style.transform = '';
+        card.classList.remove('expanded');
       });
       
       document.querySelectorAll('.card-option').forEach(option => {
@@ -1189,139 +677,23 @@
       
       document.querySelectorAll('.card-status').forEach(status => {
         status.classList.remove('answered');
-        status.innerHTML = '<i class="fas fa-circle"></i><span>Unanswered</span>';
+        status.textContent = 'Unanswered';
       });
       
-      document.querySelectorAll('.passage-paragraph').forEach(p => {
-        p.classList.remove('context-active');
-      });
-      
-      updateAnsweredCount();
-      document.getElementById('toggle-text').textContent = 'Expand All';
-      
-      showCelebration('🔄 Reset Complete', 'All cards returned to stack', 1500);
+      updateCounter();
     }
 
-    function showAnalytics() {
-      const answered = Object.keys(AppState.userAnswers).length;
-      const correct = Object.entries(AppState.userAnswers).filter(([qId, answer]) => {
-        const question = AppState.questionData[qId - 1];
-        return question && answer === question.correct;
-      }).length;
-      
-      const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
-      const timeSpent = Math.round((Date.now() - AppState.startTime) / 1000);
-      
-      const performanceLevel = accuracy === 100 ? '🏆 Perfect Score!' :
-                              accuracy >= 90 ? '⭐ Excellent!' :
-                              accuracy >= 80 ? '🎯 Very Good!' :
-                              accuracy >= 70 ? '📈 Good Progress!' :
-                              accuracy >= 60 ? '💪 Keep Improving!' : '🔄 Practice More!';
-      
-      showCelebration(
-        performanceLevel,
-        `Score: ${correct}/${AppState.questionData.length} • Accuracy: ${accuracy}% • Time: ${timeSpent}s`,
-        4000
-      );
-    }
-
-    // 🎊 Celebration System
-    function showCelebration(title, subtitle = '', duration = 2500) {
-      const celebration = document.createElement('div');
-      celebration.className = 'celebration-modal';
-      
-      const icon = title.includes('Perfect') ? '🏆' : 
-                   title.includes('Excellent') ? '⭐' : 
-                   title.includes('Correct') ? '✅' : 
-                   title.includes('Try Again') ? '❌' : '🎉';
-      
-      celebration.innerHTML = `
-        <div class="celebration-icon">${icon}</div>
-        <div class="celebration-title">${title}</div>
-        ${subtitle ? `<div class="celebration-subtitle">${subtitle}</div>` : ''}
-      `;
-      
-      document.body.appendChild(celebration);
-      
-      setTimeout(() => {
-        celebration.style.opacity = '0';
-        celebration.style.transform = 'translate(-50%, -50%) scale(0.8)';
-        setTimeout(() => celebration.remove(), 300);
-      }, duration);
-    }
-
-    // ⌨️ Keyboard Navigation
-    function initializeKeyboardNavigation() {
-      document.addEventListener('keydown', (e) => {
-        switch(e.key) {
-          case ' ':
-            e.preventDefault();
-            toggleAllCards();
-            break;
-          case 'r':
-          case 'R':
-            e.preventDefault();
-            resetCards();
-            break;
-          case 'a':
-          case 'A':
-            e.preventDefault();
-            showAnswers();
-            break;
-          case 's':
-          case 'S':
-            e.preventDefault();
-            showAnalytics();
-            break;
-          case '1':
-          case '2':
-          case '3':
-          case '4':
-          case '5':
-          case '6':
-            e.preventDefault();
-            const cardNum = parseInt(e.key);
-            if (AppState.currentCard === cardNum) {
-              stackCard(cardNum);
-            } else {
-              expandCard(cardNum);
-            }
-            break;
-        }
-      });
-    }
-
-    // 🚀 Initialize Application
-    function initializeApp() {
-      console.log('🚀 Initializing iPhone-Style Reading Cards');
-      
-      initializeQuantumField();
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
       generateCards();
-      initializeKeyboardNavigation();
-      
-      // Welcome message
-      setTimeout(() => {
-        showCelebration(
-          '📱 iPhone-Style Cards Ready',
-          'Drag handles up/down • Click to toggle • Use keyboard shortcuts',
-          3500
-        );
-      }, 1000);
-      
-      console.log('✅ App fully initialized');
-    }
+      console.log('✅ 6 iPhone-style question cards generated and ready');
+    });
 
-    // Global function exports
-    window.toggleAllCards = toggleAllCards;
+    // Global function access
+    window.stackAllCards = stackAllCards;
     window.showAnswers = showAnswers;
-    window.resetCards = resetCards;
-    window.showAnalytics = showAnalytics;
+    window.resetAll = resetAll;
     window.selectOption = selectOption;
-    window.expandCard = expandCard;
-    window.stackCard = stackCard;
-
-    // 🚀 Launch when DOM is ready
-    document.addEventListener('DOMContentLoaded', initializeApp);
   </script>
 </body>
 </html>
